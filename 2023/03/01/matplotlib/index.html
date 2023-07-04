@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Airex Yu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/03/01/matplotlib/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="简介Matplotlib 是 Python 的绘图库，它能让使用者很轻松地将数据图形化，并且提供多样化的输出格式。 Matplotlib 可以用来绘制各种静态，动态，交互式的图表。 Matplotlib 是一个非常强大的 Python 画图工具，我们可以使用该工具将很多数据通过图表的形式更直观的呈现出来。 Matplotlib 可以绘制线图、散点图、等高线图、条形图、柱状图、3D 图形、甚至是图形">
+<meta property="og:type" content="article">
+<meta property="og:title" content="matplotlib">
+<meta property="og:url" content="http://example.com/2023/03/01/matplotlib/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介Matplotlib 是 Python 的绘图库，它能让使用者很轻松地将数据图形化，并且提供多样化的输出格式。 Matplotlib 可以用来绘制各种静态，动态，交互式的图表。 Matplotlib 是一个非常强大的 Python 画图工具，我们可以使用该工具将很多数据通过图表的形式更直观的呈现出来。 Matplotlib 可以绘制线图、散点图、等高线图、条形图、柱状图、3D 图形、甚至是图形">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301093920755.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301094212807.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301094344784.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301094434237.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301094847445.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301095412012.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301095552179.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301095946760.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301100653033.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301100840827.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301101501492.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301102934299.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301103813411.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301103830750.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301104258069.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301104314950.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301110657563.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301110724138.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301140820030.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301140835363.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301142654525.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301142712029.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301142727069.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301142804868.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301142951353.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301143043318.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301143730092.png">
+<meta property="og:image" content="http://example.com/2023/03/01/matplotlib/image-20230301143743679.png">
+<meta property="article:published_time" content="2023-03-01T03:08:54.000Z">
+<meta property="article:modified_time" content="2023-05-25T12:36:01.006Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="matplotlib">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/03/01/matplotlib/image-20230301093920755.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/%E9%B1%BC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E9%B1%BC.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/%E9%B1%BC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            matplotlib -
+        
+        Airex-Daily
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+        <link href="" rel="stylesheet">
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":null,"url":null},"english":{"enable":true,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fix","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-rry6gw.png"},"title":"伸手也握不住彩虹🌈","subtitle":{"text":["——我期待"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Airex-ai","instagram":null,"zhihu":null,"twitter":null,"email":"airex.yu@foxmail.com"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":"https://music.163.com/song?id=1501530173&userid=253099352","cover":null}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.1.5","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/Airex-ai?tab=repositories"}},"随记":{"icon":"fa-solid fa-tree-palm","path":"/masonry/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Airex-Daily
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        归档
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/masonry/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tree-palm"></i>
+                                        
+                                        随记
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                归档
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB</a>
+                            </li>
+                        
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/masonry/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tree-palm"></i>
+                                
+                                随记
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+             
+                <div class="article-title">         
+                    <img src="/images/matplotlib.svg" alt="matplotlib" />
+                    <h1 class="article-title-cover">matplotlib</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/%E5%A4%B4%E5%83%8F.JPG">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Airex Yu</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-03-01 11:08:54</span>
+        <span class="mobile">2023-03-01 11:08</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-05-25 20:36:01</span>
+            <span class="mobile">2023-05-25 20:36</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/matplotlib/">matplotlib</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Matplotlib 是 Python 的绘图库，它能让使用者很轻松地将数据图形化，并且提供多样化的输出格式。</p>
+<p>Matplotlib 可以用来绘制各种静态，动态，交互式的图表。</p>
+<p>Matplotlib 是一个非常强大的 Python 画图工具，我们可以使用该工具将很多数据通过图表的形式更直观的呈现出来。</p>
+<p>Matplotlib 可以绘制线图、散点图、等高线图、条形图、柱状图、3D 图形、甚至是图形动画等等。</p>
+<h2 id="Matplotlib-应用"><a href="#Matplotlib-应用" class="headerlink" title="Matplotlib 应用"></a>Matplotlib 应用</h2><p>Matplotlib 通常与 NumPy 和 SciPy（Scientific Python）一起使用， 这种组合广泛用于替代 MatLab，是一个强大的科学计算环境，有助于我们通过 Python 学习数据科学或者机器学习。</p>
+<p>SciPy 是一个开源的 Python 算法库和数学工具包。</p>
+<p>SciPy 包含的模块有最优化、线性代数、积分、插值、特殊函数、快速傅里叶变换、信号处理和图像处理、常微分方程求解和其他科学与工程中常用的计算。</p>
+<h1 id="Matplotlib-Pyplot"><a href="#Matplotlib-Pyplot" class="headerlink" title="Matplotlib Pyplot"></a>Matplotlib Pyplot</h1><p>Pyplot 是 Matplotlib 的子库，提供了和 MATLAB 类似的绘图 API。</p>
+<p>Pyplot 是常用的绘图模块，能很方便让用户绘制 2D 图表。</p>
+<p>Pyplot 包含一系列绘图函数的相关函数，每个函数会对当前的图像进行一些修改，例如：给图像加上标记，生新的图像，在图像中产生新的绘图区域等等。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">xpoints = np.array([<span class="number">0</span>, <span class="number">6</span>])</span><br><span class="line">ypoints = np.array([<span class="number">0</span>, <span class="number">100</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(xpoints, ypoints)					<span class="comment">#(0,0) 到 (6,100) 来绘制一条线:</span></span><br><span class="line">plt.show()					</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301093920755.png"
+                      class="" title="image-20230301093920755"
+                >
+
+<p>以上实例中我们使用了 Pyplot 的 <strong>plot()</strong> 函数， <strong>plot()</strong> 函数是绘制二维图形的最基本函数。</p>
+<p><strong>plot()</strong> 用于画图它可以绘制点和线，语法格式如下：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 画单条线</span></span><br><span class="line">plot([x], y, [fmt], *, data=<span class="literal">None</span>, **kwargs)</span><br><span class="line"><span class="comment"># 画多条线</span></span><br><span class="line">plot([x], y, [fmt], [x2], y2, [fmt2], ..., **kwargs)</span><br></pre></td></tr></table></figure></div>
+
+<p>参数说明：</p>
+<ul>
+<li><strong>x, y：</strong>点或线的节点，x 为 x 轴数据，y 为 y 轴数据，数据可以列表或数组。</li>
+<li><strong>fmt：</strong>可选，定义基本格式（如颜色、标记和线条样式）。</li>
+<li>*<strong>*kwargs：</strong>可选，用在二维平面图上，设置指定属性，如标签，线的宽度等。</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">\&gt;&gt;&gt; plot(x, y)     <span class="comment"># 创建 y 中数据与 x 中对应值的二维线图，使用默认样式</span></span><br><span class="line">\&gt;&gt;&gt; plot(x, y, <span class="string">&#x27;bo&#x27;</span>) <span class="comment"># 创建 y 中数据与 x 中对应值的二维线图，使用蓝色实心圈绘制</span></span><br><span class="line">\&gt;&gt;&gt; plot(y)      <span class="comment"># x 的值为 0..N-1</span></span><br><span class="line">\&gt;&gt;&gt; plot(y, <span class="string">&#x27;r+&#x27;</span>)   <span class="comment"># 使用红色 + 号</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>颜色字符：</strong>‘b’ 蓝色，’m’ 洋红色，’g’ 绿色，’y’ 黄色，’r’ 红色，’k’ 黑色，’w’ 白色，’c’ 青绿色，’#008000’ RGB 颜色符串。多条曲线不指定颜色时，会自动选择不同颜色。</p>
+<p><strong>线型参数：</strong>‘‐’ 实线，’‐‐’ 破折线，’‐.’ 点划线，’:’ 虚线。</p>
+<p><strong>标记字符：</strong>‘.’ 点标记，’,’ 像素标记(极小点)，’o’ 实心圈标记，’v’ 倒三角标记，’^’ 上三角标记，’&gt;’ 右三角标记，’&lt;’ 左三角标记…等等。</p>
+<p>如果我们要绘制坐标 (1, 3) 到 (8, 10) 的线，我们就需要传递两个数组 [1, 8] 和 [3, 10] 给 <strong>plot</strong> 函数：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">xpoints = np.array([<span class="number">1</span>, <span class="number">8</span>])</span><br><span class="line">ypoints = np.array([<span class="number">3</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(xpoints, ypoints)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301094212807.png"
+                      class="" title="image-20230301094212807"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">xpoints = np.array([<span class="number">1</span>, <span class="number">8</span>])</span><br><span class="line">ypoints = np.array([<span class="number">3</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(xpoints, ypoints, <span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301094344784.png"
+                      class="" title="image-20230301094344784"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">xpoints = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>])</span><br><span class="line">ypoints = np.array([<span class="number">3</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(xpoints, ypoints)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301094434237.png"
+                      class="" title="image-20230301094434237"
+                >
+
+<blockquote>
+<p>如果我们不指定 x 轴上的点，则 x 会根据 y 的值来设置为 <strong>0, 1, 2, 3..N-1</strong>。</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">3</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints)			<span class="comment">#y的值有3、10，x会自动和y匹配			x 的值默认设置为 [0, 1]。</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301094847445.png"
+                      class="" title="image-20230301094847445"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">3</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">7</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints)				<span class="comment">#图中可以看出 x 的值默认设置为 [0, 1, 2, 3, 4, 5]。</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301095412012.png"
+                      class="" title="image-20230301095412012"
+                >
+
+<blockquote>
+<p>以下实例我们绘制一个正弦和余弦图，在 plt.plot() 参数中包含两对 <strong>x,y</strong> 值，第一对是 <strong>x,y</strong>，这对应于正弦函数，第二对是 <strong>x,z</strong>，这对应于余弦函数。</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>,<span class="number">4</span>*np.pi,<span class="number">0.1</span>)   <span class="comment"># start,stop,step</span></span><br><span class="line">y = np.sin(x)</span><br><span class="line">z = np.cos(x)</span><br><span class="line">plt.plot(x,y,x,z)						<span class="comment">#共用x</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301095552179.png"
+                      class="" title="image-20230301095552179"
+                >
+
+<h1 id="Matplotlib-绘图标记"><a href="#Matplotlib-绘图标记" class="headerlink" title="Matplotlib 绘图标记"></a>Matplotlib 绘图标记</h1><p>绘图过程如果我们想要给坐标自定义一些不一样的标记，就可以使用 <strong>plot()</strong> 方法的 <strong>marker</strong> 参数来定义。</p>
+<p>以下实例定义了实心圆标记：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints, marker = <span class="string">&#x27;o&#x27;</span>)				<span class="comment">#&#x27;bo&#x27; 蓝色的实心圆标记</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301095946760.png"
+                      class="" title="image-20230301095946760"
+                >
+
+<blockquote>
+<p>以下实例定义了 ***** 标记：</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints, marker = <span class="string">&#x27;*&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">plt.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], marker=matplotlib.markers.CARETDOWNBASE)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301100653033.png"
+                      class="" title="image-20230301100653033"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301100840827.png"
+                      class="" title="image-20230301100840827"
+                >
+
+<h3 id="fmt-参数"><a href="#fmt-参数" class="headerlink" title="fmt 参数"></a>fmt 参数</h3><p>fmt 参数定义了基本格式，如标记、线条样式和颜色。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt = &#x27;[marker][line][color]&#x27;</span><br></pre></td></tr></table></figure></div>
+
+<p>线类型：</p>
+<table>
+<thead>
+<tr>
+<th align="left">线类型标记</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">‘-‘</td>
+<td align="left">实线</td>
+</tr>
+<tr>
+<td align="left">‘:’</td>
+<td align="left">虚线</td>
+</tr>
+<tr>
+<td align="left">‘–’</td>
+<td align="left">破折线</td>
+</tr>
+<tr>
+<td align="left">‘-.’</td>
+<td align="left">点划线</td>
+</tr>
+</tbody></table>
+<p>颜色类型：</p>
+<table>
+<thead>
+<tr>
+<th align="left">颜色标记</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">‘r’</td>
+<td align="left">红色</td>
+</tr>
+<tr>
+<td align="left">‘g’</td>
+<td align="left">绿色</td>
+</tr>
+<tr>
+<td align="left">‘b’</td>
+<td align="left">蓝色</td>
+</tr>
+<tr>
+<td align="left">‘c’</td>
+<td align="left">青色</td>
+</tr>
+<tr>
+<td align="left">‘m’</td>
+<td align="left">品红</td>
+</tr>
+<tr>
+<td align="left">‘y’</td>
+<td align="left">黄色</td>
+</tr>
+<tr>
+<td align="left">‘k’</td>
+<td align="left">黑色</td>
+</tr>
+<tr>
+<td align="left">‘w’</td>
+<td align="left">白色</td>
+</tr>
+</tbody></table>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">6</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints, <span class="string">&#x27;o:r&#x27;</span>)					<span class="comment"># o:r，o 表示实心圆标记，: 表示虚线，r 表示颜色为红色。</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="标记大小与颜色"><a href="#标记大小与颜色" class="headerlink" title="标记大小与颜色"></a>标记大小与颜色</h3><p>我们可以自定义标记的大小与颜色，使用的参数分别是：</p>
+<ul>
+<li>markersize，简写为 <strong>ms</strong>：定义标记的大小。</li>
+<li>markerfacecolor，简写为 <strong>mfc</strong>：定义标记内部的颜色。</li>
+<li>markeredgecolor，简写为 <strong>mec</strong>：定义标记边框的颜色。</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">6</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints, marker = <span class="string">&#x27;o&#x27;</span>, ms = <span class="number">20</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301101501492.png"
+                      class="" title="image-20230301101501492"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">6</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints, marker = <span class="string">&#x27;o&#x27;</span>, ms = <span class="number">20</span>, mec = <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="comment">#plt.plot(ypoints, marker = &#x27;o&#x27;, ms = 20, mfc = &#x27;r&#x27;)</span></span><br><span class="line"><span class="comment">#plt.plot(ypoints, marker = &#x27;o&#x27;, ms = 20, mec = &#x27;#4CAF50&#x27;, mfc = &#x27;#4CAF50&#x27;)</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="线的宽度"><a href="#线的宽度" class="headerlink" title="线的宽度"></a>线的宽度</h3><p>线的宽度可以使用 <strong>linewidth</strong> 参数来定义，简写为 <strong>lw</strong>，值可以是浮点数，如：<strong>1</strong>、<strong>2.0</strong>、<strong>5.67</strong> 等。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">ypoints = np.array([<span class="number">6</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(ypoints, linewidth = <span class="string">&#x27;12.5&#x27;</span>)</span><br><span class="line"><span class="comment">#plt.plot(ypoints,&#x27;v-r&#x27;, linewidth = &#x27;12.5&#x27;)</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301102934299.png"
+                      class="" title="image-20230301102934299"
+                >
+
+<h3 id="多条线"><a href="#多条线" class="headerlink" title="多条线"></a>多条线</h3><p>plot() 方法中可以包含多对 x,y 值来绘制多条线。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">y1 = np.array([<span class="number">3</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">9</span>])</span><br><span class="line">y2 = np.array([<span class="number">6</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(y1)</span><br><span class="line">plt.plot(y2)</span><br><span class="line"></span><br><span class="line">plt.show()				<span class="comment">#x 的值默认设置为 [0, 1, 2, 3]。</span></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301103813411.png"
+                      class="" title="image-20230301103813411"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x1 = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">y1 = np.array([<span class="number">3</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">9</span>])</span><br><span class="line">x2 = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">y2 = np.array([<span class="number">6</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">plt.plot(x1, y1, x2, y2)</span><br><span class="line"><span class="comment">#plt.plot(x1, y1,&#x27;v-g&#x27;, x2, y2,&#x27;o-r&#x27;)</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301103830750.png"
+                      class="" title="image-20230301103830750"
+                >
+
+<h1 id="Matplotlib-轴标签和标题"><a href="#Matplotlib-轴标签和标题" class="headerlink" title="Matplotlib 轴标签和标题"></a>Matplotlib 轴标签和标题</h1><p>我们可以使用 <strong>xlabel()</strong> 和 <strong>ylabel()</strong> 方法来设置 x 轴和 y 轴的标签。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>])</span><br><span class="line">plt.plot(x, y)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">&quot;x - label&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;y - label&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301104258069.png"
+                      class="" title="image-20230301104258069"
+                >
+
+<h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p>我们可以使用 <strong>title()</strong> 方法来设置标题。</p>
+<h3 id="标题与标签的定位"><a href="#标题与标签的定位" class="headerlink" title="标题与标签的定位"></a>标题与标签的定位</h3><p><strong>title()</strong> 方法提供了 <strong>loc</strong> 参数来设置标题显示的位置，可以设置为: **’left’, ‘right’, 和 ‘center’， 默认值为 ‘center’**。</p>
+<p><strong>xlabel()</strong> 方法提供了 <strong>loc</strong> 参数来设置 x 轴显示的位置，可以设置为: **’left’, ‘right’, 和 ‘center’， 默认值为 ‘center’**。</p>
+<p><strong>ylabel()</strong> 方法提供了 <strong>loc</strong> 参数来设置 y 轴显示的位置，可以设置为: **’bottom’, ‘top’, 和 ‘center’， 默认值为 ‘center’**。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>])</span><br><span class="line">plt.plot(x, y)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">&quot;RUNOOB TEST TITLE&quot;</span>)</span><br><span class="line"><span class="comment">#plt.title(&quot;RUNOOB TEST TITLE&quot;,loc=&#x27;left&#x27;)</span></span><br><span class="line">plt.xlabel(<span class="string">&quot;x - label&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;y - label&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301104314950.png"
+                      class="" title="image-20230301104314950"
+                >
+
+<h1 id="Matplotlib-网格线"><a href="#Matplotlib-网格线" class="headerlink" title="Matplotlib 网格线"></a>Matplotlib 网格线</h1><p>我们可以使用 pyplot 中的 grid() 方法来设置图表中的网格线。</p>
+<p>grid() 方法语法格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matplotlib.pyplot.grid(b=None, which=&#x27;major&#x27;, axis=&#x27;both&#x27;, )</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>参数说明：</strong></p>
+<ul>
+<li><p><strong>b</strong>：可选，默认为 None，可以设置布尔值，true 为显示网格线，false 为不显示，如果设置 **kwargs 参数，则值为 true。</p>
+</li>
+<li><p><strong>which</strong>：可选，可选值有 ‘major’、’minor’ 和 ‘both’，<strong>默认为 ‘major’，表示应用更改的网格线。</strong></p>
+</li>
+<li><p><strong>axis</strong>：可选，设置显示哪个方向的网格线，可以是取 ‘both’（默认），’x’ 或 ‘y’，分别表示两个方向，x 轴方向或 y 轴方向。</p>
+</li>
+<li><p>*<strong>*kwargs</strong>：可选，设置网格样式，可以是 color&#x3D;’r’, linestyle&#x3D;’-‘ 和 linewidth&#x3D;2，分别表示网格线的颜色，样式和宽度。</p>
+</li>
+<li><p><strong>color：</strong>‘b’ 蓝色，’m’ 洋红色，’g’ 绿色，’y’ 黄色，’r’ 红色，’k’ 黑色，’w’ 白色，’c’ 青绿色，’#008000’ RGB 颜色符串。</p>
+</li>
+<li><p><strong>linestyle：</strong>‘‐’ 实线，’‐‐’ 破折线，’‐.’ 点划线，’:’ 虚线。</p>
+</li>
+<li><p><strong>linewidth</strong>：设置线的宽度，可以设置一个数字。</p>
+</li>
+</ul>
+<p>以下实例添加一个简单的网格线，参数使用默认值：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">&quot;RUNOOB grid() Test&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;x - label&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;y - label&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(x, y)</span><br><span class="line"></span><br><span class="line">plt.grid()</span><br><span class="line"><span class="comment">#plt.grid(axis=&#x27;x&#x27;) # 设置 y 就在轴方向显示网格线</span></span><br><span class="line"><span class="comment">#plt.grid(color = &#x27;r&#x27;, linestyle = &#x27;--&#x27;, linewidth = 0.5)      #不能使用&#x27;0:r&#x27;这样的复合操作</span></span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Matplotlib-绘制多图"><a href="#Matplotlib-绘制多图" class="headerlink" title="Matplotlib 绘制多图"></a>Matplotlib 绘制多图</h1><p>我们可以使用 pyplot 中的 <strong>subplot()</strong> 和 <strong>subplots()</strong> 方法来绘制多个子图。</p>
+<p><strong>subplot()</strong> 方法在绘图时需要指定位置，<strong>subplots()</strong> 方法可以一次生成多个，在调用时只需要调用生成对象的 ax 即可。</p>
+<h3 id="subplot"><a href="#subplot" class="headerlink" title="subplot"></a>subplot</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">subplot(nrows, ncols, index, **kwargs)</span><br><span class="line">subplot(pos, **kwargs)</span><br><span class="line">subplot(**kwargs)</span><br><span class="line">subplot(ax)</span><br></pre></td></tr></table></figure></div>
+
+<p>以上函数将整个绘图区域分成 nrows 行和 ncols 列，然后从左到右，从上到下的顺序对每个子区域进行编号 <strong>1…N</strong> ，左上的子区域的编号为 1、右下的区域编号为 N，编号可以通过参数 <strong>index</strong> 来设置。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot 1:</span></span><br><span class="line">xpoints = np.array([<span class="number">0</span>, <span class="number">6</span>])</span><br><span class="line">ypoints = np.array([<span class="number">0</span>, <span class="number">100</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>)		<span class="comment">#plotNum ＝ 1, 表示的坐标为(1, 1), 即第一行第一列的子图。</span></span><br><span class="line">plt.plot(xpoints,ypoints)</span><br><span class="line">plt.title(<span class="string">&quot;plot 1&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot 2:</span></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>)		<span class="comment">#plotNum ＝ 2, 表示的坐标为(1, 2), 即第一行第二列的子图。</span></span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.title(<span class="string">&quot;plot 2&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.suptitle(<span class="string">&quot;RUNOOB subplot Test&quot;</span>)			<span class="comment">#大标题是plt.title</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301110657563.png"
+                      class="" title="image-20230301110657563"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot 1:</span></span><br><span class="line">x = np.array([<span class="number">0</span>, <span class="number">6</span>])</span><br><span class="line">y = np.array([<span class="number">0</span>, <span class="number">100</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.title(<span class="string">&quot;plot 1&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot 2:</span></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.title(<span class="string">&quot;plot 2&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot 3:</span></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.title(<span class="string">&quot;plot 3&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot 4:</span></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">y = np.array([<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line">plt.plot(x,y)</span><br><span class="line">plt.title(<span class="string">&quot;plot 4&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.suptitle(<span class="string">&quot;RUNOOB subplot Test&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301110724138.png"
+                      class="" title="image-20230301110724138"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一些测试数据 -- 图1</span></span><br><span class="line">x = np.linspace(<span class="number">0</span>, <span class="number">2</span>*np.pi, <span class="number">400</span>)        <span class="comment">#400 : Number of samples to generate. Default is 50. Must be non-negative.</span></span><br><span class="line">y = np.sin(x**<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个画像和子图 -- 图2</span></span><br><span class="line">fig, ax = plt.subplots()      <span class="comment">#ax就是一个图</span></span><br><span class="line">ax.plot(x, y)</span><br><span class="line">ax.set_title(<span class="string">&#x27;Simple plot&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建两个子图 -- 图3</span></span><br><span class="line">f, (ax1, ax2) = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, sharey=<span class="literal">True</span>)</span><br><span class="line">ax1.plot(x, y)</span><br><span class="line">ax1.set_title(<span class="string">&#x27;Sharing Y axis&#x27;</span>)</span><br><span class="line">ax2.scatter(x, y)           <span class="comment">#创建一个分散的图</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建四个子图 -- 图4</span></span><br><span class="line">fig, axs = plt.subplots(<span class="number">2</span>, <span class="number">2</span>, subplot_kw=<span class="built_in">dict</span>(projection=<span class="string">&quot;polar&quot;</span>))          <span class="comment">#从文件中引入图</span></span><br><span class="line">axs[<span class="number">0</span>, <span class="number">0</span>].plot(x, y)        <span class="comment">#第一个子图</span></span><br><span class="line">axs[<span class="number">1</span>, <span class="number">1</span>].scatter(x, y)     <span class="comment">#第四个子图</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享 x 轴</span></span><br><span class="line">plt.subplots(<span class="number">2</span>, <span class="number">2</span>, sharex=<span class="string">&#x27;col&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享 y 轴</span></span><br><span class="line">plt.subplots(<span class="number">2</span>, <span class="number">2</span>, sharey=<span class="string">&#x27;row&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享 x 轴和 y 轴</span></span><br><span class="line">plt.subplots(<span class="number">2</span>, <span class="number">2</span>, sharex=<span class="string">&#x27;all&#x27;</span>, sharey=<span class="string">&#x27;all&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个也是共享 x 轴和 y 轴</span></span><br><span class="line">plt.subplots(<span class="number">2</span>, <span class="number">2</span>, sharex=<span class="literal">True</span>, sharey=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建标识为 10 的图，已经存在的则删除</span></span><br><span class="line">fig, ax = plt.subplots(num=<span class="number">10</span>, clear=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301140820030.png"
+                      class="" title="image-20230301140820030"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301140835363.png"
+                      class="" title="image-20230301140835363"
+                >
+
+<h1 id="Matplotlib-散点图"><a href="#Matplotlib-散点图" class="headerlink" title="Matplotlib 散点图"></a>Matplotlib 散点图</h1><p>我们可以使用 pyplot 中的 scatter() 方法来绘制散点图。</p>
+<p>scatter() 方法语法格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matplotlib.pyplot.scatter(x, y, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax=None, alpha=None, linewidths=None, *, edgecolors=None, plotnonfinite=False, data=None, **kwargs)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>参数说明：</strong></p>
+<p><strong>x，y</strong>：长度相同的数组，也就是我们即将绘制散点图的数据点，输入数据。</p>
+<p><strong>s</strong>：点的大小，默认 20，也可以是个数组，数组每个参数为对应点的大小。</p>
+<p><strong>c</strong>：点的颜色，默认蓝色 ‘b’，也可以是个 RGB 或 RGBA 二维行数组。</p>
+<p><strong>marker</strong>：点的样式，默认小圆圈 ‘o’。</p>
+<p><strong>cmap</strong>：Colormap，默认 None，标量或者是一个 colormap 的名字，只有 c 是一个浮点数数组的时才使用。如果没有申明就是 image.cmap。</p>
+<p><strong>norm</strong>：Normalize，默认 None，数据亮度在 0-1 之间，只有 c 是一个浮点数的数组的时才使用。</p>
+<p><strong>vmin，vmax：</strong>：亮度设置，在 norm 参数存在时会忽略。</p>
+<p><strong>alpha：</strong>：透明度设置，0-1 之间，默认 None，即不透明。</p>
+<p><strong>linewidths：</strong>：标记点的长度。</p>
+<p><strong>edgecolors：</strong>：颜色或颜色序列，默认为 ‘face’，可选值有 ‘face’, ‘none’, None。</p>
+<p><strong>plotnonfinite：</strong>：布尔值，设置是否使用非限定的 c ( inf, -inf 或 nan) 绘制点。</p>
+<p>*<strong>*kwargs：</strong>：其他参数。</p>
+<p>以下实例 scatter() 函数接收长度相同的数组参数，一个用于 x 轴的值，另一个用于 y 轴上的值：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">23</span>, <span class="number">18</span>])</span><br><span class="line"></span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301142654525.png"
+                      class="" title="image-20230301142654525"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">23</span>, <span class="number">18</span>])</span><br><span class="line">sizes = np.array([<span class="number">20</span>,<span class="number">50</span>,<span class="number">100</span>,<span class="number">200</span>,<span class="number">500</span>,<span class="number">1000</span>,<span class="number">60</span>,<span class="number">90</span>])</span><br><span class="line">plt.scatter(x, y, s=sizes)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301142712029.png"
+                      class="" title="image-20230301142712029"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>])</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">23</span>, <span class="number">18</span>])</span><br><span class="line">colors = np.array([<span class="string">&quot;red&quot;</span>,<span class="string">&quot;green&quot;</span>,<span class="string">&quot;black&quot;</span>,<span class="string">&quot;orange&quot;</span>,<span class="string">&quot;purple&quot;</span>,<span class="string">&quot;beige&quot;</span>,<span class="string">&quot;cyan&quot;</span>,<span class="string">&quot;magenta&quot;</span>])</span><br><span class="line"></span><br><span class="line">plt.scatter(x, y, c=colors)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301142727069.png"
+                      class="" title="image-20230301142727069"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">2</span>,<span class="number">17</span>,<span class="number">2</span>,<span class="number">9</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">9</span>,<span class="number">6</span>])</span><br><span class="line">y = np.array([<span class="number">99</span>,<span class="number">86</span>,<span class="number">87</span>,<span class="number">88</span>,<span class="number">111</span>,<span class="number">86</span>,<span class="number">103</span>,<span class="number">87</span>,<span class="number">94</span>,<span class="number">78</span>,<span class="number">77</span>,<span class="number">85</span>,<span class="number">86</span>])</span><br><span class="line">plt.scatter(x, y, color = <span class="string">&#x27;hotpink&#x27;</span>)</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">2</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">15</span>,<span class="number">8</span>,<span class="number">12</span>,<span class="number">9</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">11</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">14</span>,<span class="number">12</span>])</span><br><span class="line">y = np.array([<span class="number">100</span>,<span class="number">105</span>,<span class="number">84</span>,<span class="number">105</span>,<span class="number">90</span>,<span class="number">99</span>,<span class="number">90</span>,<span class="number">95</span>,<span class="number">94</span>,<span class="number">100</span>,<span class="number">79</span>,<span class="number">112</span>,<span class="number">91</span>,<span class="number">80</span>,<span class="number">85</span>])</span><br><span class="line">plt.scatter(x, y, color = <span class="string">&#x27;#88c999&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301142804868.png"
+                      class="" title="image-20230301142804868"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机数生成器的种子</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">N = <span class="number">50</span></span><br><span class="line">x = np.random.rand(N)</span><br><span class="line">y = np.random.rand(N)</span><br><span class="line">colors = np.random.rand(N)</span><br><span class="line">area = (<span class="number">30</span> * np.random.rand(N))**<span class="number">2</span>  <span class="comment"># 0 to 15 point radii</span></span><br><span class="line"></span><br><span class="line">plt.scatter(x, y, s=area, c=colors, alpha=<span class="number">0.5</span>) <span class="comment"># 设置颜色及透明度</span></span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">&quot;RUNOOB Scatter Test&quot;</span>) <span class="comment"># 设置标题</span></span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301142951353.png"
+                      class="" title="image-20230301142951353"
+                >
+
+<h3 id="颜色条-Colormap"><a href="#颜色条-Colormap" class="headerlink" title="颜色条 Colormap"></a>颜色条 Colormap</h3><p>Matplotlib 模块提供了很多可用的颜色条。</p>
+<p>颜色条就像一个颜色列表，其中每种颜色都有一个范围从 0 到 100 的值。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">2</span>,<span class="number">17</span>,<span class="number">2</span>,<span class="number">9</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">9</span>,<span class="number">6</span>])</span><br><span class="line">y = np.array([<span class="number">99</span>,<span class="number">86</span>,<span class="number">87</span>,<span class="number">88</span>,<span class="number">111</span>,<span class="number">86</span>,<span class="number">103</span>,<span class="number">87</span>,<span class="number">94</span>,<span class="number">78</span>,<span class="number">77</span>,<span class="number">85</span>,<span class="number">86</span>])</span><br><span class="line">colors = np.array([<span class="number">0</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">45</span>, <span class="number">50</span>, <span class="number">55</span>, <span class="number">60</span>, <span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>])</span><br><span class="line"></span><br><span class="line">plt.scatter(x, y, c=colors, cmap=<span class="string">&#x27;viridis&#x27;</span>)</span><br><span class="line"><span class="comment">#plt.scatter(x, y, c=colors, cmap=&#x27;afmhot_r&#x27;)</span></span><br><span class="line">plt.colorbar()				<span class="comment">#显示颜色条</span></span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301143043318.png"
+                      class="" title="image-20230301143043318"
+                >
+
+<h1 id="atplotlib-柱形图"><a href="#atplotlib-柱形图" class="headerlink" title="atplotlib 柱形图"></a>atplotlib 柱形图</h1><p>我们可以使用 pyplot 中的 bar() 方法来绘制柱形图。</p>
+<p>bar() 方法语法格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matplotlib.pyplot.bar(x, height, width=0.8, bottom=None, *, align=&#x27;center&#x27;, data=None, **kwargs)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>参数说明：</strong></p>
+<p><strong>x</strong>：浮点型数组，柱形图的 x 轴数据。</p>
+<p><strong>height</strong>：浮点型数组，柱形图的高度。</p>
+<p><strong>width</strong>：浮点型数组，柱形图的宽度。</p>
+<p><strong>bottom</strong>：浮点型数组，底座的 y 坐标，默认 0。</p>
+<p><strong>align</strong>：柱形图与 x 坐标的对齐方式，’center’ 以 x 位置为中心，这是默认值。 ‘edge’：将柱形图的左边缘与 x 位置对齐。要对齐右边缘的条形，可以传递负数的宽度值及 align&#x3D;’edge’。</p>
+<p>*<strong>*kwargs：</strong>：其他参数。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="string">&quot;Runoob-1&quot;</span>, <span class="string">&quot;Runoob-2&quot;</span>, <span class="string">&quot;Runoob-3&quot;</span>, <span class="string">&quot;C-RUNOOB&quot;</span>])</span><br><span class="line">y = np.array([<span class="number">12</span>, <span class="number">22</span>, <span class="number">6</span>, <span class="number">18</span>])</span><br><span class="line"></span><br><span class="line">plt.bar(x,y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301143730092.png"
+                      class="" title="image-20230301143730092"
+                >
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = np.array([<span class="string">&quot;Runoob-1&quot;</span>, <span class="string">&quot;Runoob-2&quot;</span>, <span class="string">&quot;Runoob-3&quot;</span>, <span class="string">&quot;C-RUNOOB&quot;</span>])</span><br><span class="line">y = np.array([<span class="number">12</span>, <span class="number">22</span>, <span class="number">6</span>, <span class="number">18</span>])</span><br><span class="line"></span><br><span class="line">plt.barh(x,y)</span><br><span class="line"><span class="comment">#plt.bar(x, y, color = &quot;#4CAF50&quot;</span></span><br><span class="line"><span class="comment">#plt.bar(x, y,  color = [&quot;#4CAF50&quot;,&quot;red&quot;,&quot;hotpink&quot;,&quot;#556B2F&quot;])</span></span><br><span class="line"><span class="comment">#plt.bar(x, y, width = 0.1)</span></span><br><span class="line"><span class="comment">#plt.barh(x, y, height = 0.1)</span></span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/01/matplotlib/image-20230301143743679.png"
+                      class="" title="image-20230301143743679"
+                >
+
+<h1 id="Matplotlib-饼图"><a href="#Matplotlib-饼图" class="headerlink" title="Matplotlib 饼图"></a>Matplotlib 饼图</h1><p>我们可以使用 pyplot 中的 pie() 方法来绘制饼图。</p>
+<p>pie() 方法语法格式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matplotlib.pyplot.pie(x, explode=None, labels=None, colors=None, autopct=None, pctdistance=0.6, shadow=False, labeldistance=1.1, startangle=0, radius=1, counterclock=True, wedgeprops=None, textprops=None, center=0, 0, frame=False, rotatelabels=False, *, normalize=None, data=None)[source]</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>参数说明：</strong></p>
+<p><strong>x</strong>：浮点型数组，表示每个扇形的面积。</p>
+<p><strong>explode：数组，表示各个扇形之间的间隔，默认值为0。</strong></p>
+<p><strong>labels：列表，各个扇形的标签，默认值为 None。</strong></p>
+<p><strong>colors</strong>：数组，表示各个扇形的颜色，默认值为 None。</p>
+<p><strong>autopct：设置饼图内各个扇形百分比显示格式</strong>，**%d%%** 整数百分比，**%0.1f** 一位小数， <strong>%0.1f%%</strong> 一位小数百分比， <strong>%0.2f%%</strong> 两位小数百分比。</p>
+<p><strong>labeldistance</strong>：标签标记的绘制位置，相对于半径的比例，默认值为 1.1，如 <strong>&lt;1</strong>则绘制在饼图内侧。</p>
+<p><strong>pctdistance：</strong>：类似于 labeldistance，指定 autopct 的位置刻度，默认值为 0.6。</p>
+<p><strong>shadow：</strong>：布尔值 True 或 False，设置饼图的阴影，默认为 False，不设置阴影。</p>
+<p><strong>radius：</strong>：设置饼图的半径，默认为 1。</p>
+<p><strong>startangle：</strong>：起始绘制饼图的角度，默认为从 x 轴正方向逆时针画起，如设定 &#x3D;90 则从 y 轴正方向画起。</p>
+<p><strong>counterclock</strong>：布尔值，设置指针方向，默认为 True，即逆时针，False 为顺时针。</p>
+<p><strong>wedgeprops</strong> ：字典类型，默认值 None。参数字典传递给 wedge 对象用来画一个饼图。例如：wedgeprops&#x3D;{‘linewidth’:5} 设置 wedge 线宽为5。</p>
+<p><strong>textprops</strong> ：字典类型，默认值为：None。传递给 text 对象的字典参数，用于设置标签（labels）和比例文字的格式。</p>
+<p><strong>center</strong> ：浮点类型的列表，默认值：(0,0)。用于设置图标中心位置。</p>
+<p><strong>frame</strong> ：布尔类型，默认值：False。如果是 True，绘制带有表的轴框架。</p>
+<p><strong>rotatelabels</strong> ：布尔类型，默认为 False。如果为 True，旋转每个 label 到指定的角度。</p>
+<p>以下实例我们简单实用 pie() 来创建一个柱形图:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">y = np.array([<span class="number">35</span>, <span class="number">25</span>, <span class="number">25</span>, <span class="number">15</span>])</span><br><span class="line"></span><br><span class="line">plt.pie(y,</span><br><span class="line">        labels=[<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;C&#x27;</span>,<span class="string">&#x27;D&#x27;</span>], <span class="comment"># 设置饼图标签</span></span><br><span class="line">        colors=[<span class="string">&quot;#d5695d&quot;</span>, <span class="string">&quot;#5d8ca8&quot;</span>, <span class="string">&quot;#65a479&quot;</span>, <span class="string">&quot;#a564c9&quot;</span>], <span class="comment"># 设置饼图颜色</span></span><br><span class="line">        explode=(<span class="number">0</span>, <span class="number">0.2</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="comment"># 第二部分突出显示，值越大，距离中心越远</span></span><br><span class="line">        autopct=<span class="string">&#x27;%.2f%%&#x27;</span>, <span class="comment"># 格式化输出百分比</span></span><br><span class="line">       )</span><br><span class="line">plt.title(<span class="string">&quot;RUNOOB Pie Test&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> matplotlib</li>
+        <li><strong>作者:</strong> Airex Yu</li>
+        <li><strong>创建于:</strong> 2023-03-01 11:08:54</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-05-25 20:36:01
+            </li>
+        
+        <li>
+            <strong>链接:</strong> http://example.com/2023/03/01/matplotlib/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/matplotlib/">#matplotlib</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/03/02/scipy/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">scipy</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/02/27/Linux/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Linux</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">matplotlib</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Matplotlib-%E5%BA%94%E7%94%A8"><span class="nav-text">Matplotlib 应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-Pyplot"><span class="nav-text">Matplotlib Pyplot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-%E7%BB%98%E5%9B%BE%E6%A0%87%E8%AE%B0"><span class="nav-text">Matplotlib 绘图标记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fmt-%E5%8F%82%E6%95%B0"><span class="nav-text">fmt 参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%E5%A4%A7%E5%B0%8F%E4%B8%8E%E9%A2%9C%E8%89%B2"><span class="nav-text">标记大小与颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%9A%84%E5%AE%BD%E5%BA%A6"><span class="nav-text">线的宽度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%9D%A1%E7%BA%BF"><span class="nav-text">多条线</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-%E8%BD%B4%E6%A0%87%E7%AD%BE%E5%92%8C%E6%A0%87%E9%A2%98"><span class="nav-text">Matplotlib 轴标签和标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E9%A2%98"><span class="nav-text">标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E9%A2%98%E4%B8%8E%E6%A0%87%E7%AD%BE%E7%9A%84%E5%AE%9A%E4%BD%8D"><span class="nav-text">标题与标签的定位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-%E7%BD%91%E6%A0%BC%E7%BA%BF"><span class="nav-text">Matplotlib 网格线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-%E7%BB%98%E5%88%B6%E5%A4%9A%E5%9B%BE"><span class="nav-text">Matplotlib 绘制多图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#subplot"><span class="nav-text">subplot</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-%E6%95%A3%E7%82%B9%E5%9B%BE"><span class="nav-text">Matplotlib 散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9C%E8%89%B2%E6%9D%A1-Colormap"><span class="nav-text">颜色条 Colormap</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#atplotlib-%E6%9F%B1%E5%BD%A2%E5%9B%BE"><span class="nav-text">atplotlib 柱形图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matplotlib-%E9%A5%BC%E5%9B%BE"><span class="nav-text">Matplotlib 饼图</span></a></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Airex Yu</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.5</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/01/05 11:45:14
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Airex Yu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/02/02/pytorch/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="PyTorchPyTorch的安装 下载并安装Anaconda 打开Anaconda Prompt，新建PyTorch虚拟环境     PyTorch相关函数12dir()函数：打开包的目录，显示目录分区help（）函数：包中的分区的工具的使用方法     PyTorch加载数据Dataset：提供一种方式去获取数据及其label  如何获取每一个数据及其label 获取数据总数  Dataloa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch">
+<meta property="og:url" content="http://example.com/2023/02/02/PyTorch/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PyTorchPyTorch的安装 下载并安装Anaconda 打开Anaconda Prompt，新建PyTorch虚拟环境     PyTorch相关函数12dir()函数：打开包的目录，显示目录分区help（）函数：包中的分区的工具的使用方法     PyTorch加载数据Dataset：提供一种方式去获取数据及其label  如何获取每一个数据及其label 获取数据总数  Dataloa">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202120702274.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202120838866.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202120914227.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202105634838.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202125029854.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202131516752.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202143017598.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202154015781.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202154713202.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202161942267-16753259824521.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202161953173.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202162156741.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202162535967.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202163711159.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230202164946144.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203161036473.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203162209976.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203165216808.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203165345341.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203170328819.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203173233888.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203173932274.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230203181054880.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204115128009.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204120829336.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204120959960.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204121416305.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204130304040.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204162901337.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204170716066.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204170810217.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204172323633.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204173052506.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204180918038.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204184039948.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230204185132536.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230205135509867.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230205153242191.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230205222100995.png">
+<meta property="og:image" content="http://example.com/2023/02/02/PyTorch/image-20230205223516248.png">
+<meta property="article:published_time" content="2023-02-02T04:32:18.000Z">
+<meta property="article:modified_time" content="2023-05-25T13:11:31.692Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PyTorch">
+<meta property="article:tag" content="TensorBoard">
+<meta property="article:tag" content="VGG">
+<meta property="article:tag" content="模型训练">
+<meta property="article:tag" content="优化器">
+<meta property="article:tag" content="激活函数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/02/02/PyTorch/image-20230202120702274.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/%E9%B1%BC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E9%B1%BC.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/%E9%B1%BC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            PyTorch -
+        
+        Airex-Daily
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+        <link href="" rel="stylesheet">
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":null,"url":null},"english":{"enable":true,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fix","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-rry6gw.png"},"title":"伸手也握不住彩虹🌈","subtitle":{"text":["——我期待"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Airex-ai","instagram":null,"zhihu":null,"twitter":null,"email":"airex.yu@foxmail.com"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":"https://music.163.com/song?id=1501530173&userid=253099352","cover":null}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.1.5","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/Airex-ai?tab=repositories"}},"随记":{"icon":"fa-solid fa-tree-palm","path":"/masonry/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Airex-Daily
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        归档
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/masonry/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tree-palm"></i>
+                                        
+                                        随记
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                归档
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB</a>
+                            </li>
+                        
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/masonry/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tree-palm"></i>
+                                
+                                随记
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+             
+                <div class="article-title">         
+                    <img src="/images/Pytorch.jpg" alt="PyTorch" />
+                    <h1 class="article-title-cover">PyTorch</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/%E5%A4%B4%E5%83%8F.JPG">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Airex Yu</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-02-02 12:32:18</span>
+        <span class="mobile">2023-02-02 12:32</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-05-25 21:11:31</span>
+            <span class="mobile">2023-05-25 21:11</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/PyTorch/">PyTorch</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/TensorBoard/">TensorBoard</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/VGG/">VGG</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/">模型训练</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%BC%98%E5%8C%96%E5%99%A8/">优化器</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/">激活函数</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="PyTorch"><a href="#PyTorch" class="headerlink" title="PyTorch"></a><strong>PyTorch</strong></h1><h2 id="PyTorch的安装"><a href="#PyTorch的安装" class="headerlink" title="PyTorch的安装"></a><strong>PyTorch的安装</strong></h2><ol>
+<li><strong>下载并安装Anaconda</strong></li>
+<li><strong>打开Anaconda Prompt，新建PyTorch虚拟环境</strong></li>
+</ol>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202120702274.png"
+                      class="" title="image-20230202120702274"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202120838866.png"
+                      class="" title="image-20230202120838866"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202120914227.png"
+                      class="" title="image-20230202120914227"
+                ></strong></p>
+<h2 id="PyTorch相关函数"><a href="#PyTorch相关函数" class="headerlink" title="PyTorch相关函数"></a><strong>PyTorch相关函数</strong></h2><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dir()函数：打开包的目录，显示目录分区</span><br><span class="line">help（）函数：包中的分区的工具的使用方法</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202105634838.png"
+                      class="" title="image-20230202105634838"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202125029854.png"
+                      class="" title="image-20230202125029854"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202131516752.png"
+                      class="" title="image-20230202131516752"
+                ></strong></p>
+<h1 id="PyTorch加载数据"><a href="#PyTorch加载数据" class="headerlink" title="PyTorch加载数据"></a><strong>PyTorch加载数据</strong></h1><p><strong>Dataset：提供一种方式去获取数据及其label</strong></p>
+<ul>
+<li><strong>如何获取每一个数据及其label</strong></li>
+<li><strong>获取数据总数</strong></li>
+</ul>
+<p><strong>Dataloader：</strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202143017598.png"
+                      class="" title="image-20230202143017598"
+                ></strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyData</span>(<span class="title class_ inherited__">Dataset</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,root_dir,label_dir</span>):   <span class="comment">#self相当于初始时的对象，root_dir和label_dir都是初始时需要传入的对象</span></span><br><span class="line">        self.root_dir = root_dir             <span class="comment">#新建了root_dir和label_dir两个局部变量</span></span><br><span class="line">        self.label_dir = label_dir</span><br><span class="line">        <span class="comment">#因为操作系统的不同，转移字符 / 可能会导致字符连接的错误，os.path.join()函数可以避免这种错误将两个字符串拼接起来</span></span><br><span class="line">        self.path = os.path.join(self.root_dir,self.label_dir)</span><br><span class="line">        self.img_path = os.listdir(self.path)       <span class="comment">#将一个文件夹转换成了列表</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, item</span>):</span><br><span class="line">        img_name = self.img_path[item]   <span class="comment">#item是列表序号，返回的是列表对应序号的文件名称</span></span><br><span class="line">        img_item_path = os.path.join(self.root_dir,self.label_dir,img_name)</span><br><span class="line">        img  = Image.<span class="built_in">open</span>(img_item_path)  <span class="comment">#打开并标识图像</span></span><br><span class="line">        label = self.label_dir</span><br><span class="line">        <span class="keyword">return</span> img,label        <span class="comment">#返回图像和图像的标识</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.img_path)</span><br><span class="line"></span><br><span class="line">root_dir = <span class="string">&quot;dataset/train&quot;</span></span><br><span class="line">ants_label_dir = <span class="string">&quot;ants&quot;</span></span><br><span class="line">bees_label_dir = <span class="string">&quot;bees&quot;</span></span><br><span class="line">ants_dataset = MyData(root_dir,ants_label_dir)</span><br><span class="line">bees_dataset = MyData(root_dir,bees_label_dir)</span><br><span class="line"></span><br><span class="line">train_dataset = ants_dataset + bees_dataset  <span class="comment">#将两个数据集相加</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202154015781.png"
+                      class="" title="image-20230202154015781"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202154713202.png"
+                      class="" title="image-20230202154713202"
+                ></strong></p>
+<h1 id="Tensorboard"><a href="#Tensorboard" class="headerlink" title="Tensorboard"></a><strong>Tensorboard</strong></h1><h2 id="绘制图像"><a href="#绘制图像" class="headerlink" title="绘制图像"></a><strong>绘制图像</strong></h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line">write = SummaryWriter(<span class="string">&quot;logs&quot;</span>)   <span class="comment">#文件保存路径</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):   <span class="comment">#画图像</span></span><br><span class="line">    <span class="comment">#write.add_scalar(&quot;y=x&quot;,i,i)   #一般需要3个参数，数据名字（标识），数据值(y轴)，训练步长(x轴)。函数的作用就是画什么样的图</span></span><br><span class="line">    write.add_scalar(<span class="string">&quot;y=2x&quot;</span>,<span class="number">2</span>*i,i)   <span class="comment">#一般需要3个参数，数据名字（标识），数据值(y轴)，训练步长(x轴)。函数的作用就是画什么样的图</span></span><br><span class="line"></span><br><span class="line">write.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202161942267-16753259824521.png"
+                      class="" title="image-20230202161942267"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202161953173.png"
+                      class="" title="image-20230202161953173"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202162156741.png"
+                      class="" title="image-20230202162156741"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202162535967.png"
+                      class="" title="image-20230202162535967"
+                ></strong></p>
+<h2 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a><strong>添加图片</strong></h2><p><strong><code> write.add_image()</code>函数中支持的图片有torch.Tensor, numpy.array, or string&#x2F;blobname</strong> </p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202163711159.png"
+                      class="" title="image-20230202163711159"
+                ></strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">img_array = np.array(img)   <span class="comment">#转化图片类型，注意img图片一定得是哦通过Image.open打开的</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">write = SummaryWriter(<span class="string">&quot;logs&quot;</span>)   <span class="comment">#文件保存路径</span></span><br><span class="line"></span><br><span class="line">image_path = <span class="string">&quot;dataset/train/ants/0013035.jpg&quot;</span></span><br><span class="line">img_PIL = Image.<span class="built_in">open</span>(image_path)</span><br><span class="line">img_array = np.array(img_PIL)     <span class="comment">#转换图片类型</span></span><br><span class="line"><span class="built_in">print</span>(img_array.shape)</span><br><span class="line">write.add_image(<span class="string">&quot;test&quot;</span>,img_array,dataformats=<span class="string">&#x27;HWC&#x27;</span>)         <span class="comment">#画图,注意：从PIL到numpy，需要在add_image()中指定shape的含义</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">write.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230202164946144.png"
+                      class="" title="image-20230202164946144"
+                ></strong></p>
+<h1 id="transforms"><a href="#transforms" class="headerlink" title="transforms"></a><strong>transforms</strong></h1><h2 id="将PIL类型图像转化为tensor类型"><a href="#将PIL类型图像转化为tensor类型" class="headerlink" title="将PIL类型图像转化为tensor类型"></a><strong>将PIL类型图像转化为tensor类型</strong></h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1、使用transforms</span></span><br><span class="line">img_path = <span class="string">&quot;dataset/train/ants/0013035.jpg&quot;</span></span><br><span class="line">img = Image.<span class="built_in">open</span>(img_path)</span><br><span class="line"></span><br><span class="line"><span class="comment">#初始化transforms对象</span></span><br><span class="line">tensor_trans = transforms.ToTensor()</span><br><span class="line"><span class="comment">#将PIL类型图像转化为tensor类型</span></span><br><span class="line">tensor_img = tensor_trans(img)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(tensor_img)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203161036473.png"
+                      class="" title="image-20230203161036473"
+                ></strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="comment"># 1、使用transforms</span></span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line">img_path = <span class="string">&quot;dataset/train/ants/0013035.jpg&quot;</span></span><br><span class="line">img = Image.<span class="built_in">open</span>(img_path)</span><br><span class="line">tensor_trans = transforms.ToTensor()</span><br><span class="line">img_tensor = tensor_trans(img)</span><br><span class="line"></span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;logs&quot;</span>)</span><br><span class="line"><span class="comment">#传入的img_tensor的类型就是tensor</span></span><br><span class="line">img = writer.add_image(<span class="string">&quot;test&quot;</span>,img_tensor)   <span class="comment">#参数分别是标识，图片类型（torch.Tensor, numpy.array, or string/blobname）等参数</span></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203162209976.png"
+                      class="" title="image-20230203162209976"
+                ></strong></p>
+<h2 id="常见的transforms"><a href="#常见的transforms" class="headerlink" title="常见的transforms"></a><strong>常见的transforms</strong></h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">__call__(avg1，avg2)函数：调用该函数时不需要使用 . 的方式调用</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Persion</span>：</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self,name</span>):</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;__call__&quot;</span>+<span class="string">&quot; hello &quot;</span>+name)</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">hello</span>(<span class="params">self,name</span>):</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;hello&quot;</span>+name)</span><br><span class="line">		</span><br><span class="line">person = Person()</span><br><span class="line">person(<span class="string">&quot;zhangsan&quot;</span>)        <span class="comment">#调用__call__函数</span></span><br><span class="line">person.hello(<span class="string">&quot;lisi&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a><strong>归一化</strong></h3><p>  <strong>归一化：归一化就是要把需要处理的数据经过处理后（均值变为0，标准差变为1）限制在你需要的一定范围内，为了后面数据处理的方便，保证程序运行时收敛加快。</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Normalize</span></span><br><span class="line"><span class="built_in">print</span>(img_tensor[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>]) <span class="comment">#第0层第0行第0列的像素</span></span><br><span class="line">trans_norm = transforms.Normalize([<span class="number">0.5</span>,<span class="number">0.5</span>,<span class="number">0.5</span>],[<span class="number">0.5</span>,<span class="number">0.5</span>,<span class="number">0.5</span>])  <span class="comment">#mean：各通道的均值 std：各通道的标准差 inplace：是否原地操作</span></span><br><span class="line">img_norm = trans_norm(img_tensor)</span><br><span class="line"><span class="built_in">print</span>(img_norm[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>])</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203165216808.png"
+                      class="" title="image-20230203165216808"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203165345341.png"
+                      class="" title="image-20230203165345341"
+                ></strong></p>
+<h3 id="Resize"><a href="#Resize" class="headerlink" title="Resize"></a><strong>Resize</strong></h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(img.size)</span><br><span class="line">trans_size = transforms.Resize((<span class="number">512</span>,<span class="number">512</span>))</span><br><span class="line">img_resize = trans_size(img)</span><br><span class="line">img_resize = tensor_trans(img_resize)</span><br><span class="line">writer.add_image(<span class="string">&quot;Resize&quot;</span>,img_resize,<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(img_resize)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203170328819.png"
+                      class="" title="image-20230203170328819"
+                ></strong></p>
+<h3 id="compose"><a href="#compose" class="headerlink" title="compose"></a><strong>compose</strong></h3><p><strong>compose函数可以理解为一次性地将一张图片进行了两次变化</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># compose - resize - 2</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    Compose()的参数需要是一个列表，即[数据1，数据2，...]</span></span><br><span class="line"><span class="string">    又Compose中的参数需要时transforms类型，所以Compose([transforms1,transforms2,....])</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">trans_resize_2 = transforms.Resize(<span class="number">512</span>)</span><br><span class="line"><span class="comment">#PIL -&gt; PIL -&gt; tensor</span></span><br><span class="line">trans_compose = transforms.Compose([trans_resize_2,tensor_trans])  <span class="comment">#Compose()函数的参数中，avg2的输入必须为avg1的输出</span></span><br><span class="line">img_resize_2 = trans_compose(img)</span><br><span class="line">writer.add_image(<span class="string">&quot;Resize2&quot;</span>,img_resize_2,<span class="number">1</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203173233888.png"
+                      class="" title="image-20230203173233888"
+                ></strong></p>
+<h3 id="RandomCrop"><a href="#RandomCrop" class="headerlink" title="RandomCrop"></a><strong>RandomCrop</strong></h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Randomcrop</span></span><br><span class="line">trans_random = transforms.RandomCrop(<span class="number">512</span>)</span><br><span class="line">trans_compose_2 = transforms.Compose([trans_random,tensor_trans])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):  <span class="comment">#随机裁剪了十张</span></span><br><span class="line">    img_crop = trans_compose_2(img)</span><br><span class="line">    writer.add_image(<span class="string">&quot;RandomCrop&quot;</span>,img_crop,i)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203173932274.png"
+                      class="" title="image-20230203173932274"
+                ></strong></p>
+<h1 id="Torchvision中数据集的使用"><a href="#Torchvision中数据集的使用" class="headerlink" title="Torchvision中数据集的使用"></a><strong>Torchvision中数据集的使用</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"></span><br><span class="line"><span class="comment">#用torchvision从网络中下载数据集</span></span><br><span class="line">train_set = torchvision.datasets.CIFAR10(root=<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">True</span>,download=<span class="literal">True</span>)  <span class="comment">#./代表当前目录</span></span><br><span class="line">test_set = torchvision.datasets.CIFAR10(root=<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(test_set[<span class="number">0</span>]) <span class="comment">#数据集中的第一个数据</span></span><br><span class="line"><span class="built_in">print</span>(test_set.classes) <span class="comment">#数据集的数据类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#获得对象</span></span><br><span class="line">img,target = test_set[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(img)</span><br><span class="line"><span class="built_in">print</span>(target)                     <span class="comment">#可以理解为图片的标识，数据集第一个对象的标识是标识列表的第三个</span></span><br><span class="line"><span class="built_in">print</span>(test_set.classes[target])   <span class="comment">#打印数据集第一个对象的标识</span></span><br><span class="line"><span class="comment"># img.show()</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230203181054880.png"
+                      class="" title="image-20230203181054880"
+                ></strong></p>
+<h1 id="DataLoader的使用"><a href="#DataLoader的使用" class="headerlink" title="DataLoader的使用"></a><strong>DataLoader的使用</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"></span><br><span class="line">test_data = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line"><span class="comment">#batch_size：每次取数据的个数 shuffle：重复取数据集时，顺序是否变化    num_workers：多线程    drop_last：受否取余</span></span><br><span class="line">test_loader = DataLoader(dataset=test_data,batch_size=<span class="number">4</span>,shuffle=<span class="literal">True</span>,num_workers=<span class="number">0</span>,drop_last=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试数据集中第一张图片及target</span></span><br><span class="line">img,target = test_data[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(img.shape)</span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span>  test_loader:    </span><br><span class="line">    imgs,targets = data</span><br><span class="line">    <span class="built_in">print</span>(imgs.shape)</span><br><span class="line">    <span class="built_in">print</span>(targets)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204115128009.png"
+                      class="" title="image-20230204115128009"
+                ></strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line">test_data = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line"><span class="comment">#batch_size：每次取数据的个数 shuffle：重复取数据集时，顺序是否变化    num_workers：多线程    drop_last：数据个数不足batch_size是否舍去</span></span><br><span class="line">test_loader = DataLoader(dataset=test_data,batch_size=<span class="number">64</span>,shuffle=<span class="literal">True</span>,num_workers=<span class="number">0</span>,drop_last=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试数据集中第一张图片及target</span></span><br><span class="line">img,target = test_data[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(img.shape)</span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"></span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;data_loader&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    step = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span>  test_loader:</span><br><span class="line">        imgs,targets = data</span><br><span class="line">        <span class="comment"># print(imgs.shape)</span></span><br><span class="line">        <span class="comment"># print(targets)</span></span><br><span class="line">        writer.add_images(<span class="string">&quot;Epoch&#123;&#125;&quot;</span>.<span class="built_in">format</span>(epoch),imgs,step)</span><br><span class="line">        step = step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204120829336.png"
+                      class="" title="image-20230204120829336"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204120959960.png"
+                      class="" title="image-20230204120959960"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204121416305.png"
+                      class="" title="image-20230204121416305"
+                ></strong></p>
+<h1 id="神经网络骨架"><a href="#神经网络骨架" class="headerlink" title="神经网络骨架"></a><strong>神经网络骨架</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">testModule</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,<span class="built_in">input</span></span>):</span><br><span class="line">        output = <span class="built_in">input</span> + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line">test_module = testModule()</span><br><span class="line">x = torch.tensor(<span class="number">1.0</span>)       <span class="comment">#将1转为tensor类型</span></span><br><span class="line">output = test_module(x)</span><br><span class="line"><span class="built_in">print</span>(output)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="卷积测试"><a href="#卷积测试" class="headerlink" title="卷积测试"></a><strong>卷积测试</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = torch.tensor([           <span class="comment">#shape是[5,5]</span></span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>],</span><br><span class="line">    [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>],</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">    [<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>],</span><br><span class="line">    [<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">kernel = torch.tensor([</span><br><span class="line">    [<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>],</span><br><span class="line">    [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">    [<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">#reshape tensor</span></span><br><span class="line"><span class="built_in">input</span> = torch.reshape(<span class="built_in">input</span>,(<span class="number">1</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">5</span>))</span><br><span class="line">kernel = torch.reshape(kernel,(<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">input</span>.shape)</span><br><span class="line"><span class="built_in">print</span>(kernel.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">#卷积</span></span><br><span class="line">output = F.conv2d(<span class="built_in">input</span>,kernel,stride=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(output)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204130304040.png"
+                      class="" title="image-20230204130304040"
+                ></strong></p>
+<h1 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a><strong>卷积层</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Conv2d</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line">dataset = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line"></span><br><span class="line">data_loader = DataLoader(dataset,<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">convolution2</span>(nn.Module):</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:               <span class="comment">#对象实例化会自动执行</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.conv1 = Conv2d(<span class="number">3</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>)  <span class="comment"># 输入通道数：in_channels，图片输入就是三通道；kernel_size：过滤器的维数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):              <span class="comment">#接受参数输入</span></span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">conv2 = convolution2()</span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;logs&quot;</span>)</span><br><span class="line"></span><br><span class="line">step = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> data_loader:</span><br><span class="line">    imgs,target = data</span><br><span class="line">    output = conv2(imgs)</span><br><span class="line">    <span class="comment">#输入 torch.Size([64, 3, 32, 32])</span></span><br><span class="line">    <span class="built_in">print</span>(imgs.shape)</span><br><span class="line">    writer.add_images(<span class="string">&quot;convolution_before&quot;</span>,imgs,step)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#输出 torch.Size([64, 6, 30, 30])</span></span><br><span class="line">    <span class="built_in">print</span>(output.shape)</span><br><span class="line">    output = torch.reshape(output,(-<span class="number">1</span>,<span class="number">3</span>,<span class="number">30</span>,<span class="number">30</span>))                  <span class="comment">#-1表示通过后面的数字自适应size</span></span><br><span class="line">    writer.add_images(<span class="string">&quot;convolution_after&quot;</span>,output,step)         <span class="comment">#tensorboard只能显示3个通道的图像，经过卷积后的图像变为了6通道，所以要reshape</span></span><br><span class="line"></span><br><span class="line">    step = step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204162901337.png"
+                      class="" title="image-20230204162901337"
+                ></strong></p>
+<h1 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a><strong>池化层</strong></h1><p><strong>类比于视频的分辨率，1080p的视频经过池化后可以变成4k或其他分辨率。池化层的作用就是最大程度地保持内容的相似，数据大小尽可能小</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> MaxPool2d</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dataset = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,<span class="literal">False</span>,torchvision.transforms.ToTensor())</span><br><span class="line">dataLoader = DataLoader(dataset,<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">maxPool</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.maxpol1 = MaxPool2d(kernel_size=<span class="number">3</span>,ceil_mode=<span class="literal">False</span>)   <span class="comment">#dilation（扩张）：表示每个矩阵相邻元素的间隔    ceil_mode：数字向上取整</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,<span class="built_in">input</span></span>):</span><br><span class="line">        output = self.maxpol1(<span class="built_in">input</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line">maxpool_test = maxPool()</span><br><span class="line"></span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;logs&quot;</span>)</span><br><span class="line">step = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> dataLoader:</span><br><span class="line">    imgs,target = data</span><br><span class="line">    writer.add_images(<span class="string">&quot;input&quot;</span>,imgs,step)</span><br><span class="line">    output = maxpool_test(imgs)</span><br><span class="line">    writer.add_images(<span class="string">&quot;output&quot;</span>,output,step)</span><br><span class="line">    step = step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204170716066.png"
+                      class="" title="image-20230204170716066"
+                ></strong></p>
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204170810217.png"
+                      class="" title="image-20230204170810217"
+                ></strong></p>
+<h1 id="非线性激活"><a href="#非线性激活" class="headerlink" title="非线性激活"></a><strong>非线性激活</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ReLU</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = torch.tensor([</span><br><span class="line">    [<span class="number">1</span>,-<span class="number">0.5</span>],</span><br><span class="line">    [-<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">nonLinear_act</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.reLu1 = ReLU()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,<span class="built_in">input</span></span>):</span><br><span class="line">        output = self.reLu1(<span class="built_in">input</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line">nonL = nonLinear_act()</span><br><span class="line">output = nonL(<span class="built_in">input</span>)</span><br><span class="line"><span class="built_in">print</span>(output)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204172323633.png"
+                      class="" title="image-20230204172323633"
+                ></strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ReLU, Sigmoid</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line">dataset = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line">dataLoader = DataLoader(dataset,<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">nonLinear_act</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.sigmoid = Sigmoid()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,<span class="built_in">input</span></span>):</span><br><span class="line">        output = self.sigmoid(<span class="built_in">input</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line">nonL = nonLinear_act()</span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;logs&quot;</span>)</span><br><span class="line">step = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> dataLoader:</span><br><span class="line">    imgs,target = data</span><br><span class="line">    output = nonL(imgs)</span><br><span class="line">    writer.add_images(<span class="string">&quot;sigMoid——befor&quot;</span>, imgs, step)</span><br><span class="line">    writer.add_images(<span class="string">&quot;sigMoid&quot;</span>,output,step)</span><br><span class="line">    step = step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204173052506.png"
+                      class="" title="image-20230204173052506"
+                ></strong></p>
+<h1 id="线性激活"><a href="#线性激活" class="headerlink" title="线性激活"></a><strong>线性激活</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ReLU, Sigmoid, Linear</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line">dataset = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line">dataLoader = DataLoader(dataset,<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Linear_act</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.linear = Linear(<span class="number">196608</span>,<span class="number">10</span>)  <span class="comment">#in_feature： size of each input sample</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,<span class="built_in">input</span></span>):</span><br><span class="line">        output = self.linear(<span class="built_in">input</span>)</span><br><span class="line">        <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line">linear_test = Linear_act()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> dataLoader:</span><br><span class="line">    imgs,target = data</span><br><span class="line">    <span class="built_in">print</span>(imgs.shape)</span><br><span class="line">    output = torch.flatten(imgs)      <span class="comment">#将一张图片铺平</span></span><br><span class="line">    <span class="built_in">print</span>(output.shape)</span><br><span class="line">    output = linear_test(output)</span><br><span class="line">    <span class="built_in">print</span>(output.shape)              <span class="comment">#线性变换后的图片</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204180918038.png"
+                      class="" title="image-20230204180918038"
+                ></strong></p>
+<h1 id="Sequential的使用"><a href="#Sequential的使用" class="headerlink" title="Sequential的使用"></a><strong>Sequential的使用</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Conv2d, MaxPool2d, Flatten, Linear</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CiFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.conv1 = Conv2d(<span class="number">3</span>,<span class="number">32</span>,<span class="number">5</span>,padding=<span class="number">2</span>)</span><br><span class="line">        self.maxPool1 = MaxPool2d(<span class="number">2</span>)</span><br><span class="line">        self.conv2 = Conv2d(<span class="number">32</span>,<span class="number">32</span>,<span class="number">5</span>,padding=<span class="number">2</span>)</span><br><span class="line">        self.maxPool2 = MaxPool2d(<span class="number">2</span>)</span><br><span class="line">        self.conv3 = Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">5</span>, padding=<span class="number">2</span>)</span><br><span class="line">        self.maxPool3 = MaxPool2d(<span class="number">2</span>)</span><br><span class="line">        self.flatten = Flatten()  <span class="comment">#将数据变换成一维</span></span><br><span class="line">        self.linear1 = Linear(<span class="number">1024</span>,<span class="number">64</span>)</span><br><span class="line">        self.linear2 = Linear(<span class="number">64</span>,<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        x = self.maxPool1(x)</span><br><span class="line">        x = self.conv2(x)</span><br><span class="line">        x = self.maxPool2(x)</span><br><span class="line">        x = self.conv3(x)</span><br><span class="line">        x = self.maxPool3(x)</span><br><span class="line">        x = self.flatten(x)</span><br><span class="line">        x = self.linear1(x)</span><br><span class="line">        x = self.linear2(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">ciFar = CiFar()</span><br><span class="line"><span class="comment"># print(ciFar)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = torch.ones((<span class="number">64</span>,<span class="number">3</span>,<span class="number">32</span>,<span class="number">32</span>))    <span class="comment">#64个3通道的32*32的tensor型数据</span></span><br><span class="line">output = ciFar(<span class="built_in">input</span>)</span><br><span class="line"><span class="built_in">print</span>(output.shape)            <span class="comment">#将64个3通道的32*32的tensor型数据变为64个列表（每个列表中有10个数）</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204184039948.png"
+                      class="" title="image-20230204184039948"
+                ></strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Conv2d, MaxPool2d, Flatten, Linear, Sequential</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CiFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">        self.model1 = Sequential(             <span class="comment">#Sequential将所有的层都连接了起来</span></span><br><span class="line">            Conv2d(<span class="number">3</span>, <span class="number">32</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>, <span class="number">32</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            Linear(<span class="number">1024</span>, <span class="number">64</span>),</span><br><span class="line">            Linear(<span class="number">64</span>, <span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.model1(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">ciFar = CiFar()</span><br><span class="line"><span class="comment"># print(ciFar)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = torch.ones((<span class="number">64</span>,<span class="number">3</span>,<span class="number">32</span>,<span class="number">32</span>))    <span class="comment">#64个3通道的32*32的tensor型数据</span></span><br><span class="line">output = ciFar(<span class="built_in">input</span>)</span><br><span class="line"><span class="built_in">print</span>(output.shape)            <span class="comment">#将64个3通道的32*32的tensor型数据变为64个列表（每个列表中有10个数）</span></span><br><span class="line"></span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;logs&quot;</span>)</span><br><span class="line">writer.add_graph(ciFar,<span class="built_in">input</span>)         <span class="comment">#模型；输入的数据</span></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230204185132536.png"
+                      class="" title="image-20230204185132536"
+                ></strong></p>
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a><strong>损失函数</strong></h1><p><strong>作用：</strong></p>
+<ul>
+<li><strong>计算实际输出和目标之间的差距</strong></li>
+<li><strong>反向传播，即通过损失函数进行梯度下降</strong></li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> L1Loss, MSELoss, CrossEntropyLoss</span><br><span class="line"></span><br><span class="line">inputs = torch.tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],dtype=torch.float32)</span><br><span class="line">targets = torch.tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>],dtype=torch.float32)</span><br><span class="line"></span><br><span class="line">inputs = torch.reshape(inputs,(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>))          <span class="comment">#batch_size: 1;1通道；1行3列</span></span><br><span class="line"></span><br><span class="line">targets = torch.reshape(targets,(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">loss = L1Loss()</span><br><span class="line">result = loss(inputs,targets)</span><br><span class="line"></span><br><span class="line"><span class="comment">#平方差</span></span><br><span class="line">loss_mse = MSELoss()</span><br><span class="line">result_mse = loss_mse(inputs,targets)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="built_in">print</span>(result_mse)</span><br><span class="line"></span><br><span class="line"><span class="comment">#交叉熵损失函数</span></span><br><span class="line">x = torch.tensor([<span class="number">0.1</span>,<span class="number">0.2</span>,<span class="number">0.3</span>])</span><br><span class="line">y = torch.tensor([<span class="number">1</span>])</span><br><span class="line">x = torch.reshape(x,(<span class="number">1</span>,<span class="number">3</span>))               <span class="comment">#1代表1个   3代表3通道</span></span><br><span class="line">loss_cross = CrossEntropyLoss()          <span class="comment">#输入输出都是tensor，而tensor都是3通道的</span></span><br><span class="line">result_cross = loss_cross(x,y)</span><br><span class="line"><span class="built_in">print</span>(result_cross)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Conv2d, MaxPool2d, Flatten, Linear, Sequential, CrossEntropyLoss</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"></span><br><span class="line">dataset = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line">dataLoader = DataLoader(dataset,batch_size=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CiFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">        self.model1 = Sequential(             <span class="comment">#Sequential将所有的层都连接了起来</span></span><br><span class="line">            Conv2d(<span class="number">3</span>, <span class="number">32</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>, <span class="number">32</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            Linear(<span class="number">1024</span>, <span class="number">64</span>),</span><br><span class="line">            Linear(<span class="number">64</span>, <span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.model1(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">ciFar = CiFar()</span><br><span class="line"></span><br><span class="line"><span class="comment">#交叉熵损失函数适用于多元分类问题，CiFar10就是分类问题</span></span><br><span class="line">loss = CrossEntropyLoss()</span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> dataLoader:</span><br><span class="line">    imgs,targets = data</span><br><span class="line">    outputs = ciFar(imgs)</span><br><span class="line">    result_loss = loss(outputs,targets)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#反向传播      通过反向传播来执行梯度下降；        注意反向传播运用在经过损失函数计算的结果</span></span><br><span class="line">    result_loss.backward()</span><br><span class="line">    <span class="comment">#print(result_loss)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a><strong>优化器</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Conv2d, MaxPool2d, Flatten, Linear, Sequential, CrossEntropyLoss</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"></span><br><span class="line">dataset = torchvision.datasets.CIFAR10(<span class="string">&quot;./dataset&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line">dataLoader = DataLoader(dataset,batch_size=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CiFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">        self.model1 = Sequential(             <span class="comment">#Sequential将所有的层都连接了起来</span></span><br><span class="line">            Conv2d(<span class="number">3</span>, <span class="number">32</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>, <span class="number">32</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">5</span>, padding=<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            Linear(<span class="number">1024</span>, <span class="number">64</span>),</span><br><span class="line">            Linear(<span class="number">64</span>, <span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.model1(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">ciFar = CiFar()</span><br><span class="line"><span class="comment">#交叉熵损失函数适用于多元分类问题，CiFar10就是分类问题</span></span><br><span class="line">loss = CrossEntropyLoss()</span><br><span class="line"><span class="comment">#模型的参数；学习速率</span></span><br><span class="line">optim = torch.optim.SGD(ciFar.parameters(),lr=<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">    running_loss = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> dataLoader:</span><br><span class="line">        imgs,targets = data</span><br><span class="line">        outputs = ciFar(imgs)</span><br><span class="line">        result_loss = loss(outputs,targets)</span><br><span class="line">        optim.zero_grad()                        <span class="comment">#将网络中所有参数的梯度置0</span></span><br><span class="line">        result_loss.backward()                   <span class="comment">#反向传播，获得所有节点的梯度</span></span><br><span class="line">        optim.step()                             <span class="comment">#梯度下降</span></span><br><span class="line">        running_loss = running_loss + result_loss</span><br><span class="line">    <span class="built_in">print</span>(running_loss)          <span class="comment">#每一轮的总损失</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230205135509867.png"
+                      class="" title="image-20230205135509867"
+                ></strong></p>
+<h1 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a><strong>VGG</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Linear</span><br><span class="line"></span><br><span class="line">vgg_false = torchvision.models.vgg16(pretrained=<span class="literal">False</span>)  <span class="comment">#使用的是原网络的参数</span></span><br><span class="line">vgg_true = torchvision.models.vgg16(pretrained=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(vgg_true)</span><br><span class="line"></span><br><span class="line">train_data = torchvision.datasets.CIFAR10(<span class="string">&#x27;./dataset&#x27;</span>,train=<span class="literal">True</span>,transform=torchvision.transforms.ToTensor())</span><br><span class="line"></span><br><span class="line"><span class="comment">#更改VGG模型的输出</span></span><br><span class="line"><span class="comment"># vgg_true.classifier.add_module(&#x27;add_linear&#x27;,Linear(1000,10))   #vgg模型的最后一层有4096个输入，1000个输出，通过add_modele在表标识为Sequential的层添加了另外一个输入1000，输出10的层</span></span><br><span class="line"><span class="comment"># print(vgg_true)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#通过修改VGG模型现有的层改变模型的输出</span></span><br><span class="line">vgg_false.classifier[<span class="number">6</span>] = Linear(<span class="number">4096</span>,<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(vgg_false)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230205153242191.png"
+                      class="" title="image-20230205153242191"
+                ></strong></p>
+<h1 id="模型的保存和加载"><a href="#模型的保存和加载" class="headerlink" title="模型的保存和加载"></a><strong>模型的保存和加载</strong></h1><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Conv2d</span><br><span class="line"></span><br><span class="line">vgg16 = torchvision.models.vgg16(pretrained=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#保存方式1：要保存的网络；保存网络的文件路径    .pth是后缀名       (模型结构+模型参数)</span></span><br><span class="line">torch.save(vgg16,<span class="string">&quot;vgg16_method1.pth&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#保存方式2：模型参数（官方推荐）</span></span><br><span class="line">torch.save(vgg16.state_dict(),<span class="string">&quot;vgg16_method2.pth&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">model_test</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.conv1 = Conv2d(<span class="number">3</span>,<span class="number">64</span>,kernel_size=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">model = model_test()</span><br><span class="line">torch.save(model,<span class="string">&quot;model_test.pth&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> model_save <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#方法1加载模型，对应保存方式1</span></span><br><span class="line">model = torch.load(<span class="string">&quot;vgg16_method1.pth&quot;</span>)</span><br><span class="line"><span class="comment"># print(model)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#方法2加载模型，对应保存方式2         模型的参数以字典的形式保存</span></span><br><span class="line">vgg16 = torchvision.models.vgg16(pretrained=<span class="literal">False</span>)</span><br><span class="line"><span class="comment">#torch.load(&quot;vgg16_method1.pth&quot;) 对应的是保存方式2；vgg16.load_state_dict加载字典中的参数</span></span><br><span class="line">vgg16.load_state_dict(torch.load(<span class="string">&quot;vgg16_method2.pth&quot;</span>))       <span class="comment">#模型加载参数</span></span><br><span class="line"><span class="comment"># print(vgg16)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#注意，在加载模型时需要声明模型，但不需要实例化模型       可以用from model_save import *  代替以下代码</span></span><br><span class="line"><span class="comment"># class model_test(nn.Module):</span></span><br><span class="line"><span class="comment">#     def __init__(self) -&gt; None:</span></span><br><span class="line"><span class="comment">#         super().__init__()</span></span><br><span class="line"><span class="comment">#         self.conv1 = Conv2d(3,64,kernel_size=3)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     def forward(self,x):</span></span><br><span class="line"><span class="comment">#         x = self.conv1(x)</span></span><br><span class="line"><span class="comment">#         return x</span></span><br><span class="line"></span><br><span class="line">mdoel_1 = torch.load(<span class="string">&quot;model_test.pth&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(mdoel_1)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="完整的训练模型套路"><a href="#完整的训练模型套路" class="headerlink" title="完整的训练模型套路"></a><strong>完整的训练模型套路</strong></h1><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a><strong>补充</strong></h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line">outputs = torch.tensor([</span><br><span class="line">    [<span class="number">0.1</span>,<span class="number">0.2</span>],</span><br><span class="line">    [<span class="number">0.3</span>,<span class="number">0.4</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">#比较outputs，输出数值最大的序号  1横向 0纵向</span></span><br><span class="line"><span class="built_in">print</span>(outputs.argmax(<span class="number">1</span>))      <span class="comment">#输出tensor([1, 1])</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">[0.1,0.2,0.5],</span></span><br><span class="line"><span class="string">[0.3,0.4,0.1]         输出tensor([2, 1])</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[0.1,0.2],</span></span><br><span class="line"><span class="string">[0.3,0.4]             输出tensor([1, 1])      </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#下列代码表示预测正确的个数</span></span><br><span class="line">preds = outputs.argmax(<span class="number">1</span>)        <span class="comment">#测试值</span></span><br><span class="line">targets = torch.tensor([<span class="number">0</span>,<span class="number">1</span>])    <span class="comment">#真实值   </span></span><br><span class="line"><span class="built_in">print</span>(preds == targets)          <span class="comment">#输出 tensor([False,  True])</span></span><br><span class="line"><span class="built_in">print</span>((preds == targets).<span class="built_in">sum</span>())          <span class="comment">#输出 1</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230205222100995.png"
+                      class="" title="image-20230205222100995"
+                ></strong></p>
+<h2 id="ciFar模型"><a href="#ciFar模型" class="headerlink" title="ciFar模型"></a><strong>ciFar模型</strong></h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Sequential, Conv2d, MaxPool2d, Flatten, Linear</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ciFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.model = Sequential(</span><br><span class="line">            Conv2d(<span class="number">3</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>,<span class="number">64</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            Linear(<span class="number">64</span>*<span class="number">4</span>*<span class="number">4</span>,<span class="number">64</span>),</span><br><span class="line">            Linear(<span class="number">64</span>,<span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.model(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#测试model</span></span><br><span class="line"><span class="comment"># if __name__ == &#x27;__main__&#x27;:</span></span><br><span class="line"><span class="comment">#     ciFar_test = ciFar()</span></span><br><span class="line"><span class="comment">#     input = torch.ones((64,3,32,32))</span></span><br><span class="line"><span class="comment">#     output = ciFar_test(input)</span></span><br><span class="line"><span class="comment">#     print(output.shape)</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> CrossEntropyLoss</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> ciFar10_model <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">train_data = torchvision.datasets.CIFAR10(<span class="string">&quot;../data&quot;</span>,train=<span class="literal">True</span>,transform=torchvision.transforms.ToTensor(),download=<span class="literal">True</span>)</span><br><span class="line">test_data = torchvision.datasets.CIFAR10(<span class="string">&quot;../data&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor(),download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#length</span></span><br><span class="line">train_data_len = <span class="built_in">len</span>(train_data)</span><br><span class="line">test_data_len = <span class="built_in">len</span>(test_data)</span><br><span class="line"><span class="comment">#format()将参数替代&#123;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;训练数据集的长度：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(train_data_len))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;测试数据集的长度：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(test_data_len))</span><br><span class="line"></span><br><span class="line"><span class="comment">#利用DataLoader加载数据集</span></span><br><span class="line">train_dataLoader = DataLoader(train_data,batch_size=<span class="number">64</span>)</span><br><span class="line">test_dataLoader = DataLoader(test_data,batch_size=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建网络模型</span></span><br><span class="line">ciFar_test = ciFar()</span><br><span class="line"></span><br><span class="line"><span class="comment">#损失函数（分类问题）</span></span><br><span class="line">loss_fn = CrossEntropyLoss()</span><br><span class="line"></span><br><span class="line"><span class="comment">#优化器</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">optimizer = torch.optim.SGD(ciFar_test.parameters(),lr=learning_rate)     <span class="comment">#SGD随机梯度下降</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置训练网络的参数</span></span><br><span class="line">total_train_step = <span class="number">0</span>   <span class="comment">#训练次数</span></span><br><span class="line">total_test_step = <span class="number">0</span>   <span class="comment">#测试次数</span></span><br><span class="line">epoch = <span class="number">10</span>             <span class="comment">#训练轮数</span></span><br><span class="line">total_accuracy = <span class="number">0</span>      <span class="comment">#测试集预测正确数</span></span><br><span class="line"></span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;../logs&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=====第&#123;&#125;轮训练开始======&quot;</span>.<span class="built_in">format</span>(i+<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#训练步骤开始</span></span><br><span class="line">    ciFar_test.train()          <span class="comment">#不写影响不大，只有涉及到相应的层才必须写</span></span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> train_dataLoader:</span><br><span class="line">        imgs,targets = data       <span class="comment">#target是真实的分类值</span></span><br><span class="line">        outputs = ciFar_test(imgs)</span><br><span class="line">        loss = loss_fn(outputs,targets)      <span class="comment">#计算模型输出与真实分类值的误差</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#优化器优化模型</span></span><br><span class="line">        optimizer.zero_grad()   <span class="comment">#梯度清零</span></span><br><span class="line">        loss.backward()         <span class="comment">#反向传播</span></span><br><span class="line">        optimizer.step()        <span class="comment">#梯度下降</span></span><br><span class="line"></span><br><span class="line">        total_train_step = total_train_step + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> total_train_step % <span class="number">100</span> ==<span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;训练次数：&#123;&#125;，Loss：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(total_train_step,loss.item()))     <span class="comment">#item()输出数据时不带数据类型</span></span><br><span class="line">            writer.add_scalar(<span class="string">&quot;train_loss&quot;</span>,loss.item(),total_train_step)         <span class="comment">#用tensorboard表示损失函数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#测试步骤开始</span></span><br><span class="line">    ciFar_test.<span class="built_in">eval</span>()              <span class="comment">#不写影响不大，只有涉及到相应的层才必须写</span></span><br><span class="line">    total_test_loss = <span class="number">0</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> test_dataLoader:</span><br><span class="line">            imgs,targets = data</span><br><span class="line">            outputs = ciFar_test(imgs)</span><br><span class="line">            loss = loss_fn(outputs,targets)</span><br><span class="line">            total_test_loss = total_test_loss + loss.item()</span><br><span class="line">            accuracy = (outputs.argmax(<span class="number">1</span>) == targets).<span class="built_in">sum</span>()      <span class="comment">#每个数据预测正确个数</span></span><br><span class="line">            total_accuracy = total_accuracy + accuracy</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;第&#123;&#125;轮的总Loss为：&#123;&#125;&quot;</span>.<span class="built_in">format</span>((i+<span class="number">1</span>),total_test_loss))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;第&#123;&#125;轮的正确率：&#123;&#125;&quot;</span>.<span class="built_in">format</span>((i+<span class="number">1</span>),total_accuracy / test_data_len))</span><br><span class="line">    writer.add_scalar(<span class="string">&quot;test_loss&quot;</span>,total_test_loss,total_test_step)</span><br><span class="line">    writer.add_scalar(<span class="string">&quot;test_accuracy&quot;</span>,total_accuracy / test_data_len)</span><br><span class="line">    total_test_step = total_test_step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># torch.save(ciFar_test,&quot;ciFar_test_&#123;&#125;.pth&quot;.format(i))</span></span><br><span class="line">    <span class="comment"># print(&quot;已保存第&#123;&#125;轮训练模型&quot;.format(i))</span></span><br><span class="line"></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/02/PyTorch/image-20230205223516248.png"
+                      class="" title="image-20230205223516248"
+                ></strong></p>
+<h2 id="利用GPU训练"><a href="#利用GPU训练" class="headerlink" title="利用GPU训练"></a><strong>利用GPU训练</strong></h2><h3 id="GP训练1"><a href="#GP训练1" class="headerlink" title="GP训练1"></a><strong>GP训练1</strong></h3><p><strong>对<code> 模型</code>、<code>数据</code>、<code>损失函数</code>进行 .cuda()处理</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> CrossEntropyLoss</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torch.utils.tensorboard <span class="keyword">import</span> SummaryWriter</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Sequential, Conv2d, MaxPool2d, Flatten, Linear</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">train_data = torchvision.datasets.CIFAR10(<span class="string">&quot;../data&quot;</span>,train=<span class="literal">True</span>,transform=torchvision.transforms.ToTensor(),download=<span class="literal">True</span>)</span><br><span class="line">test_data = torchvision.datasets.CIFAR10(<span class="string">&quot;../data&quot;</span>,train=<span class="literal">False</span>,transform=torchvision.transforms.ToTensor(),download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#length</span></span><br><span class="line">train_data_len = <span class="built_in">len</span>(train_data)</span><br><span class="line">test_data_len = <span class="built_in">len</span>(test_data)</span><br><span class="line"><span class="comment">#format()将参数替代&#123;&#125;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;训练数据集的长度：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(train_data_len))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;测试数据集的长度：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(test_data_len))</span><br><span class="line"></span><br><span class="line"><span class="comment">#利用DataLoader加载数据集</span></span><br><span class="line">train_dataLoader = DataLoader(train_data,batch_size=<span class="number">64</span>)</span><br><span class="line">test_dataLoader = DataLoader(test_data,batch_size=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建网络模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ciFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.model = Sequential(</span><br><span class="line">            Conv2d(<span class="number">3</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>,<span class="number">64</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            Linear(<span class="number">64</span>*<span class="number">4</span>*<span class="number">4</span>,<span class="number">64</span>),</span><br><span class="line">            Linear(<span class="number">64</span>,<span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.model(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">ciFar_test = ciFar()</span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    ciFar_test.cuda()                        <span class="comment">#利用GPU训练，但下载的pytorch没有CUD，所以无法验证</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#损失函数（分类问题）</span></span><br><span class="line">loss_fn = CrossEntropyLoss()</span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    loss_fn = loss_fn.cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment">#优化器</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">optimizer = torch.optim.SGD(ciFar_test.parameters(),lr=learning_rate)     <span class="comment">#SGD随机梯度下降</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置训练网络的参数</span></span><br><span class="line">total_train_step = <span class="number">0</span>   <span class="comment">#训练次数</span></span><br><span class="line">total_test_step = <span class="number">0</span>   <span class="comment">#测试次数</span></span><br><span class="line">epoch = <span class="number">10</span>             <span class="comment">#训练轮数</span></span><br><span class="line">total_accuracy = <span class="number">0</span>      <span class="comment">#测试集预测正确数</span></span><br><span class="line"></span><br><span class="line">writer = SummaryWriter(<span class="string">&quot;../logs&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(epoch):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=====第&#123;&#125;轮训练开始======&quot;</span>.<span class="built_in">format</span>(i+<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#训练步骤开始</span></span><br><span class="line">    ciFar_test.train()          <span class="comment">#不写影响不大，只有涉及到相应的层才必须写</span></span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> train_dataLoader:</span><br><span class="line">        imgs,targets = data       <span class="comment">#target是真实的分类值</span></span><br><span class="line">        <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">            imgs = imgs.cuda()</span><br><span class="line">            targets = targets.cuda()</span><br><span class="line">        outputs = ciFar_test(imgs)</span><br><span class="line">        loss = loss_fn(outputs,targets)      <span class="comment">#计算模型输出与真实分类值的误差</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#优化器优化模型</span></span><br><span class="line">        optimizer.zero_grad()   <span class="comment">#梯度清零</span></span><br><span class="line">        loss.backward()         <span class="comment">#反向传播</span></span><br><span class="line">        optimizer.step()        <span class="comment">#梯度下降</span></span><br><span class="line"></span><br><span class="line">        total_train_step = total_train_step + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> total_train_step % <span class="number">100</span> ==<span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;训练次数：&#123;&#125;，Loss：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(total_train_step,loss.item()))     <span class="comment">#item()输出数据时不带数据类型</span></span><br><span class="line">            writer.add_scalar(<span class="string">&quot;train_loss&quot;</span>,loss.item(),total_train_step)         <span class="comment">#用tensorboard表示损失函数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#测试步骤开始</span></span><br><span class="line">    ciFar_test.<span class="built_in">eval</span>()              <span class="comment">#不写影响不大，只有涉及到相应的层才必须写</span></span><br><span class="line">    total_test_loss = <span class="number">0</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> test_dataLoader:</span><br><span class="line">            imgs,targets = data</span><br><span class="line">            <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">                imgs = imgs.cuda()</span><br><span class="line">                targets = targets.cuda()</span><br><span class="line">            outputs = ciFar_test(imgs)</span><br><span class="line">            loss = loss_fn(outputs,targets)</span><br><span class="line">            total_test_loss = total_test_loss + loss.item()</span><br><span class="line">            accuracy = (outputs.argmax(<span class="number">1</span>) == targets).<span class="built_in">sum</span>()      <span class="comment">#每个数据预测正确个数</span></span><br><span class="line">            total_accuracy = total_accuracy + accuracy</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;第&#123;&#125;轮的总Loss为：&#123;&#125;&quot;</span>.<span class="built_in">format</span>((i+<span class="number">1</span>),total_test_loss))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;第&#123;&#125;轮的正确率：&#123;&#125;&quot;</span>.<span class="built_in">format</span>((i+<span class="number">1</span>),total_accuracy / test_data_len))</span><br><span class="line">    writer.add_scalar(<span class="string">&quot;test_loss&quot;</span>,total_test_loss,total_test_step)</span><br><span class="line">    writer.add_scalar(<span class="string">&quot;test_accuracy&quot;</span>,total_accuracy / test_data_len)</span><br><span class="line">    total_test_step = total_test_step + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># torch.save(ciFar_test,&quot;ciFar_test_&#123;&#125;.pth&quot;.format(i))</span></span><br><span class="line">    <span class="comment"># print(&quot;已保存第&#123;&#125;轮训练模型&quot;.format(i))</span></span><br><span class="line"></span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="GPU训练2（常用）"><a href="#GPU训练2（常用）" class="headerlink" title="GPU训练2（常用）"></a><strong>GPU训练2（常用）</strong></h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="模型验证"><a href="#模型验证" class="headerlink" title="模型验证"></a><strong>模型验证</strong></h1><p><strong>注意：png格式是4通道，除了RGB3个通道，还有一个透明通道。调用<code>image.convert(&#39;RGB&#39;)</code>，保留其颜色通道，即3通道</strong></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Sequential, Conv2d, MaxPool2d, Flatten, Linear</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ciFar</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.model = Sequential(</span><br><span class="line">            Conv2d(<span class="number">3</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Conv2d(<span class="number">32</span>,<span class="number">64</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>),</span><br><span class="line">            MaxPool2d(<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            Linear(<span class="number">64</span>*<span class="number">4</span>*<span class="number">4</span>,<span class="number">64</span>),</span><br><span class="line">            Linear(<span class="number">64</span>,<span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        x = self.model(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">img_path = <span class="string">&quot;../dataset/plane1.png&quot;</span></span><br><span class="line">img = Image.<span class="built_in">open</span>(img_path)</span><br><span class="line">img = img.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(img)</span><br><span class="line"></span><br><span class="line">transforms = torchvision.transforms.Compose([</span><br><span class="line">    torchvision.transforms.Resize((<span class="number">32</span>,<span class="number">32</span>)),</span><br><span class="line">    torchvision.transforms.ToTensor()</span><br><span class="line">])</span><br><span class="line">image = transforms(img)</span><br><span class="line"><span class="comment"># print(image.shape)</span></span><br><span class="line">image = torch.reshape(image,(<span class="number">1</span>,<span class="number">3</span>,<span class="number">32</span>,<span class="number">32</span>))         <span class="comment">#1是batch_size   通常都需要指定</span></span><br><span class="line"></span><br><span class="line">model = torch.load(<span class="string">&quot;ciFar_test_29.pth&quot;</span>,map_location=torch.device(<span class="string">&#x27;cpu&#x27;</span>))   <span class="comment">#经CUDA训练的模型要想在CPU上运行，需设置map_location</span></span><br><span class="line"><span class="built_in">print</span>(model)</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试开始</span></span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    output = model(image)</span><br><span class="line"><span class="built_in">print</span>(output.argmax(<span class="number">1</span>))</span><br></pre></td></tr></table></figure></div>
+
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> PyTorch</li>
+        <li><strong>作者:</strong> Airex Yu</li>
+        <li><strong>创建于:</strong> 2023-02-02 12:32:18</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-05-25 21:11:31
+            </li>
+        
+        <li>
+            <strong>链接:</strong> http://example.com/2023/02/02/PyTorch/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/PyTorch/">#PyTorch</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/TensorBoard/">#TensorBoard</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/VGG/">#VGG</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/">#模型训练</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E4%BC%98%E5%8C%96%E5%99%A8/">#优化器</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/">#激活函数</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/02/06/opencv/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">opencv</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/01/31/Numpy/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Numpy</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">PyTorch</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PyTorch"><span class="nav-text">PyTorch</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-text">PyTorch的安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-text">PyTorch相关函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PyTorch%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE"><span class="nav-text">PyTorch加载数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tensorboard"><span class="nav-text">Tensorboard</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E5%9B%BE%E5%83%8F"><span class="nav-text">绘制图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87"><span class="nav-text">添加图片</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#transforms"><span class="nav-text">transforms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86PIL%E7%B1%BB%E5%9E%8B%E5%9B%BE%E5%83%8F%E8%BD%AC%E5%8C%96%E4%B8%BAtensor%E7%B1%BB%E5%9E%8B"><span class="nav-text">将PIL类型图像转化为tensor类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84transforms"><span class="nav-text">常见的transforms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-text">归一化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resize"><span class="nav-text">Resize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compose"><span class="nav-text">compose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RandomCrop"><span class="nav-text">RandomCrop</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Torchvision%E4%B8%AD%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">Torchvision中数据集的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DataLoader%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">DataLoader的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%AA%A8%E6%9E%B6"><span class="nav-text">神经网络骨架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E6%B5%8B%E8%AF%95"><span class="nav-text">卷积测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%A0%E5%8C%96%E5%B1%82"><span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB"><span class="nav-text">非线性激活</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB"><span class="nav-text">线性激活</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sequential%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">Sequential的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8"><span class="nav-text">优化器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VGG"><span class="nav-text">VGG</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD"><span class="nav-text">模型的保存和加载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E5%A5%97%E8%B7%AF"><span class="nav-text">完整的训练模型套路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-text">补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ciFar%E6%A8%A1%E5%9E%8B"><span class="nav-text">ciFar模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8GPU%E8%AE%AD%E7%BB%83"><span class="nav-text">利用GPU训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GP%E8%AE%AD%E7%BB%831"><span class="nav-text">GP训练1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU%E8%AE%AD%E7%BB%832%EF%BC%88%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="nav-text">GPU训练2（常用）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%AA%8C%E8%AF%81"><span class="nav-text">模型验证</span></a></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Airex Yu</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.5</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/01/05 11:45:14
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

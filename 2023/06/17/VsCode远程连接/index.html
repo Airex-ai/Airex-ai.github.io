@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Airex Yu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/06/17/vscode远程连接/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="一、连接准备 安装扩展  安装好VSCode后，单击VSCode界面左侧活动栏的扩展管理，并在搜索框搜索Remote Explorer进行安装。   安装成功后，左侧活动栏会显示Remote Explorer图标，如下图所示。     二、远程连接1.添加远程主机 如下图所示，按步骤顺序1~3操作。    12345678#其中步骤3远程主机配置编辑如下所示：ssh: 表示使用SSH服务进行连接h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VsCode远程连接">
+<meta property="og:url" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、连接准备 安装扩展  安装好VSCode后，单击VSCode界面左侧活动栏的扩展管理，并在搜索框搜索Remote Explorer进行安装。   安装成功后，左侧活动栏会显示Remote Explorer图标，如下图所示。     二、远程连接1.添加远程主机 如下图所示，按步骤顺序1~3操作。    12345678#其中步骤3远程主机配置编辑如下所示：ssh: 表示使用SSH服务进行连接h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155539893.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155645548.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617150336870.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151218664.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151401834.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151633000.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151857290.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152334036.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152447975.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152625954.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152711339.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153218551.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153439568.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153514261.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153655546.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153805405.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617154427895.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155012266.png">
+<meta property="og:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155111307.png">
+<meta property="article:published_time" content="2023-06-17T08:22:21.000Z">
+<meta property="article:modified_time" content="2023-06-17T08:23:00.778Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155539893.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/%E9%B1%BC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E9%B1%BC.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/%E9%B1%BC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            VsCode远程连接 -
+        
+        Airex-Daily
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+        <link href="" rel="stylesheet">
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":null,"url":null},"english":{"enable":true,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fix","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-rry6gw.png"},"title":"伸手也握不住彩虹🌈","subtitle":{"text":["——我期待"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Airex-ai","instagram":null,"zhihu":null,"twitter":null,"email":"airex.yu@foxmail.com"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":"https://music.163.com/song?id=1501530173&userid=253099352","cover":null}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.1.5","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/Airex-ai?tab=repositories"}},"随记":{"icon":"fa-solid fa-tree-palm","path":"/masonry/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Airex-Daily
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        归档
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/masonry/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tree-palm"></i>
+                                        
+                                        随记
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                归档
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB</a>
+                            </li>
+                        
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/masonry/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tree-palm"></i>
+                                
+                                随记
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">VsCode远程连接</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/%E5%A4%B4%E5%83%8F.JPG">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Airex Yu</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-06-17 16:22:21</span>
+        <span class="mobile">2023-06-17 16:22</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-06-17 16:23</span>
+            <span class="mobile">2023-06-17 16:23</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="一、连接准备"><a href="#一、连接准备" class="headerlink" title="一、连接准备"></a>一、连接准备</h1><blockquote>
+<p>安装扩展</p>
+</blockquote>
+<p>安装好<code>VSCode</code>后，单击<code>VSCode</code>界面左侧活动栏的<code>扩展管理</code>，并在搜索框搜索<code>Remote Explorer</code>进行安装。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155539893.png"
+                      class="" title="image-20230617155539893"
+                >
+
+<p>安装成功后，左侧活动栏会显示<code>Remote Explorer</code>图标，如下图所示。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155645548.png"
+                      class="" title="image-20230617155645548"
+                >
+
+
+
+<h1 id="二、远程连接"><a href="#二、远程连接" class="headerlink" title="二、远程连接"></a>二、远程连接</h1><h2 id="1-添加远程主机"><a href="#1-添加远程主机" class="headerlink" title="1.添加远程主机"></a>1.添加远程主机</h2><blockquote>
+<p>如下图所示，按步骤顺序1~3操作。</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617150336870.png"
+                      class="" title="image-20230617150336870"
+                >
+
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#其中步骤3远程主机配置编辑如下所示：</span></span><br><span class="line">ssh: 表示使用SSH服务进行连接</span><br><span class="line">hello: 待连接主机用户用名</span><br><span class="line">@后： 待连接主机域名或IP地址</span><br><span class="line">-A ： 可添加选项</span><br><span class="line"></span><br><span class="line"><span class="comment">#例如：</span></span><br><span class="line">ssh wit@yfaqh.xyz -p 6203		<span class="comment">#表示通过SSH服务连接yfaqh.xyz主机上的6203端口</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<blockquote>
+<p>编辑配置文件</p>
+</blockquote>
+<p>在经过上述操作后，<code>VsCode</code>会弹出选择配置文件选项，保存您刚刚输入的连接信息，如下图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151218664.png"
+                      class="" title="image-20230617151218664"
+                >
+
+<p>默认选第一个，表示以本地的当前用户存放SSH连接信息。选择后<code>VsCode</code>会提示您是否查看配置信息。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151401834.png"
+                      class="" title="image-20230617151401834"
+                >
+
+<p>选择查看。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151633000.png"
+                      class="" title="image-20230617151633000"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617151857290.png"
+                      class="" title="image-20230617151857290"
+                >
+
+
+
+<h2 id="2-连接远程主机"><a href="#2-连接远程主机" class="headerlink" title="2.连接远程主机"></a>2.连接远程主机</h2><blockquote>
+<p>开始连接</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152334036.png"
+                      class="" title="image-20230617152334036"
+                >
+
+<blockquote>
+<p>选择远程主机操作系统</p>
+</blockquote>
+<p>第一次连接，需要手动选择远程主机的操作系统，根据实际远程主机的操作系统选择即可。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152447975.png"
+                      class="" title="image-20230617152447975"
+                >
+
+<blockquote>
+<p>输入远程主机账户密码</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152625954.png"
+                      class="" title="image-20230617152625954"
+                >
+
+<blockquote>
+<p>进入远程主机</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617152711339.png"
+                      class="" title="image-20230617152711339"
+                >
+
+
+
+<h1 id="三、远程使用"><a href="#三、远程使用" class="headerlink" title="三、远程使用"></a>三、远程使用</h1><h2 id="1-打开文件夹"><a href="#1-打开文件夹" class="headerlink" title="1. 打开文件夹"></a>1. 打开文件夹</h2><blockquote>
+<p>选择文件夹</p>
+</blockquote>
+<p>按下图中的步骤 1~3 操作。单击编辑器左侧的活动栏中的<code>资源管理器</code>，单击<code>打开文 件夹</code>，然后需要进入文件目录，单击确定就可进入，然后进行下一步操作。（<strong>PS：如果想取消打开文件夹的操作，按 ESC 退出即可。</strong>）</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153218551.png"
+                      class="" title="image-20230617153218551"
+                >
+
+<blockquote>
+<p>提示输入密码</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153439568.png"
+                      class="" title="image-20230617153439568"
+                >
+
+<blockquote>
+<p>信任远程主机</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153514261.png"
+                      class="" title="image-20230617153514261"
+                >
+
+<blockquote>
+<p>进入文件夹</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153655546.png"
+                      class="" title="image-20230617153655546"
+                >
+
+<h2 id="2-快速进入主机的某一目录"><a href="#2-快速进入主机的某一目录" class="headerlink" title="2. 快速进入主机的某一目录"></a>2. 快速进入主机的某一目录</h2><p>前面我们使用过了某一目录，当我们下次再远程连接时，如下图，主机列表里会留有成功打开过的文件目录的记录，方便直接连接到对应的目录，开始你的工作。下图就是成功打开过<code>bin目录</code>。点级记录右边的<code>打开选项</code>进入<code>bin目录</code>。（PS：记录可自行选择删除）</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617153805405.png"
+                      class="" title="image-20230617153805405"
+                >
+
+<h2 id="3-集成终端的使用"><a href="#3-集成终端的使用" class="headerlink" title="3. 集成终端的使用"></a>3. 集成终端的使用</h2><p>在目录树中找到某一个文件夹， 右键选择<code>在集成终端打开</code>即可在<code>VSCode</code>中打开远程主机的终端并进入到对应的目录下，进行下一步指令操作。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617154427895.png"
+                      class="" title="image-20230617154427895"
+                >
+
+<h2 id="4-文件操作"><a href="#4-文件操作" class="headerlink" title="4. 文件操作"></a>4. 文件操作</h2><ol>
+<li>在集成终端使用 Linux 指令进行文件&#x2F;文件夹的操作；</li>
+<li>利用<code>VSCode</code>编辑器界面操作文件&#x2F;文件夹。</li>
+</ol>
+<h2 id="5-本地与远程主机传输文件"><a href="#5-本地与远程主机传输文件" class="headerlink" title="5. 本地与远程主机传输文件"></a>5. 本地与远程主机传输文件</h2><blockquote>
+<p>下载</p>
+</blockquote>
+<p>右键文件或文件夹，选择<code>下载</code>，在弹出的<code>文件管理器</code>中选择对应文件夹进行保存即可。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155012266.png"
+                      class="" title="image-20230617155012266"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/06/17/VsCode%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/image-20230617155111307.png"
+                      class="" title="image-20230617155111307"
+                >
+
+
+
+<blockquote>
+<p>上传</p>
+</blockquote>
+<p>当需要将文件或文件夹上传到远程主机时，直接将文件或文件夹拖拽到远程主机的对应目录下即可。</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> VsCode远程连接</li>
+        <li><strong>作者:</strong> Airex Yu</li>
+        <li><strong>创建于:</strong> 2023-06-17 16:22:21</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-06-17 16:23:00
+            </li>
+        
+        <li>
+            <strong>链接:</strong> http://example.com/2023/06/17/VsCode远程连接/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/06/27/CMake/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">CMake</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/06/12/3D-Object-Detection-for-Autonomous-Driving-A-Comprehensive-Survey/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">3D Object Detection for Autonomous Driving A Comprehensive Survey</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">VsCode远程连接</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%BF%9E%E6%8E%A5%E5%87%86%E5%A4%87"><span class="nav-text">一、连接准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="nav-text">二、远程连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA"><span class="nav-text">1.添加远程主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA"><span class="nav-text">2.连接远程主机</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BF%9C%E7%A8%8B%E4%BD%BF%E7%94%A8"><span class="nav-text">三、远程使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-text">1. 打开文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%BF%AB%E9%80%9F%E8%BF%9B%E5%85%A5%E4%B8%BB%E6%9C%BA%E7%9A%84%E6%9F%90%E4%B8%80%E7%9B%AE%E5%BD%95"><span class="nav-text">2. 快速进入主机的某一目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%9B%86%E6%88%90%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">3. 集成终端的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-text">4. 文件操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%9C%AC%E5%9C%B0%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6"><span class="nav-text">5. 本地与远程主机传输文件</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Airex Yu</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.5</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/01/05 11:45:14
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

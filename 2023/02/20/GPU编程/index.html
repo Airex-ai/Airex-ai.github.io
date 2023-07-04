@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Airex Yu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/02/20/gpu编程/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="我们为什么要使用GPUGPU（Graphics Processing Unit）在相同的价格和功率范围内，比CPU提供更高的指令吞吐量和内存带宽。许多应用程序利用这些更高的能力，在GPU上比在CPU上运行得更快。其他计算设备，如FPGA，也非常节能，但提供的编程灵活性要比GPU少得多。 GPU和CPU在功能上的差异是因为它们的设计目标不同。虽然 CPU 旨在以尽可能快的速度执行一系列称为线程的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPU编程">
+<meta property="og:url" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我们为什么要使用GPUGPU（Graphics Processing Unit）在相同的价格和功率范围内，比CPU提供更高的指令吞吐量和内存带宽。许多应用程序利用这些更高的能力，在GPU上比在CPU上运行得更快。其他计算设备，如FPGA，也非常节能，但提供的编程灵活性要比GPU少得多。 GPU和CPU在功能上的差异是因为它们的设计目标不同。虽然 CPU 旨在以尽可能快的速度执行一系列称为线程的操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222090549605.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222102553497.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220153102054.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-0-CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B01/4.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222143656183.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222143927527.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222144438047.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135333139.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135407638.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135547259.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135618356.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220142104408.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220144203475.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220144236703.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220144417197.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220152027225.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220153102054-16849365937621.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-0-CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B01/4.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-1-CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B02/1.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220185957721.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/cuda_thread.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220193414770.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220193422132.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/memory.png">
+<meta property="og:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220193722549.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/2_2.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/1_1.png">
+<meta property="og:image" content="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/2_1.png">
+<meta property="article:published_time" content="2023-02-20T13:17:45.000Z">
+<meta property="article:modified_time" content="2023-05-25T12:36:36.477Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CUDA">
+<meta property="article:tag" content="kernel">
+<meta property="article:tag" content="线程">
+<meta property="article:tag" content="异构编程">
+<meta property="article:tag" content="并行计算">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222090549605.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/%E9%B1%BC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E9%B1%BC.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/%E9%B1%BC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            GPU编程 -
+        
+        Airex-Daily
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+        <link href="" rel="stylesheet">
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":null,"url":null},"english":{"enable":true,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fix","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-rry6gw.png"},"title":"伸手也握不住彩虹🌈","subtitle":{"text":["——我期待"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Airex-ai","instagram":null,"zhihu":null,"twitter":null,"email":"airex.yu@foxmail.com"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":"https://music.163.com/song?id=1501530173&userid=253099352","cover":null}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.1.5","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/Airex-ai?tab=repositories"}},"随记":{"icon":"fa-solid fa-tree-palm","path":"/masonry/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Airex-Daily
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        归档
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/masonry/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tree-palm"></i>
+                                        
+                                        随记
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                归档
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB</a>
+                            </li>
+                        
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/masonry/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tree-palm"></i>
+                                
+                                随记
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+             
+                <div class="article-title">         
+                    <img src="/images/GPU%E7%BC%96%E7%A8%8B.jpg" alt="GPU编程" />
+                    <h1 class="article-title-cover">GPU编程</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/%E5%A4%B4%E5%83%8F.JPG">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Airex Yu</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-02-20 21:17:45</span>
+        <span class="mobile">2023-02-20 21:17</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-05-25 20:36:36</span>
+            <span class="mobile">2023-05-25 20:36</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/GPU%E7%BC%96%E7%A8%8B/">GPU编程</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CUDA/">CUDA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/kernel/">kernel</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%BA%BF%E7%A8%8B/">线程</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%BC%82%E6%9E%84%E7%BC%96%E7%A8%8B/">异构编程</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/">并行计算</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="我们为什么要使用GPU"><a href="#我们为什么要使用GPU" class="headerlink" title="我们为什么要使用GPU"></a>我们为什么要使用GPU</h1><p>GPU（Graphics Processing Unit）在相同的价格和功率范围内，比CPU提供更高的指令吞吐量和内存带宽。许多应用程序利用这些更高的能力，在GPU上比在CPU上运行得更快。其他计算设备，如FPGA，也非常节能，但提供的编程灵活性要比GPU少得多。</p>
+<p>GPU和CPU在功能上的差异是因为它们的设计目标不同。虽<strong>然 CPU 旨在以尽可能快的速度执行一系列称为线程的操作，并且可以并行执行数十个这样的线程。但GPU却能并行执行成千上万个</strong>(摊销较慢的单线程性能以实现更大的吞吐量)。</p>
+<p>GPU 专门用于高度并行计算，因此设计时更多的晶体管用于<strong>数据处理</strong>，而不是数据缓存和流量控制。将更多晶体管用于数据处理，例如浮点计算，有利于高度并行计算。<strong>GPU可以通过计算<code>隐藏内存访问延迟</code>，而不是依靠大数据缓存和复杂的流控制来避免长时间的内存访问延迟，这两者在晶体管方面都是昂贵的。</strong></p>
+<p>下图显示了 CPU 与 GPU 的芯片资源分布示例。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222090549605.png"
+                      class="" title="image-20230222090549605"
+                >
+
+<h1 id="CUDA®：通用并行计算平台和编程模型"><a href="#CUDA®：通用并行计算平台和编程模型" class="headerlink" title="CUDA®：通用并行计算平台和编程模型"></a>CUDA®：通用并行计算平台和编程模型</h1><p>2006 年 11 月，NVIDIA® 推出了 CUDA®，这是一种通用并行计算平台和编程模型，它利用 NVIDIA GPU 中的并行计算引擎以比 CPU 更有效的方式解决许多复杂的计算问题。</p>
+<p>CUDA 附带一个软件环境，允许开发人员使用 C++ 作为高级编程语言。 如下图所示，支持其他语言、应用程序编程接口或基于指令的方法，例如 FORTRAN、DirectCompute、OpenACC。</p>
+<h1 id="可扩展的编程模型"><a href="#可扩展的编程模型" class="headerlink" title="可扩展的编程模型"></a>可扩展的编程模型</h1><p>多核 CPU 和众核 GPU 的出现意味着主流处理器芯片现在是并行系统。利用不断增加的处理器内核数量，开发能够透明地扩展可并行的应用软件，来就像 3D 图形应用程序透明地将其并行性扩展到具有广泛不同内核数量的多核 GPU 一样。</p>
+<p><strong>其核心是三个关键抽象——线程组的层次结构、共享内存和屏障同步——它们只是作为最小的语言扩展集向程序员公开。</strong>这些抽象提供了细粒度的数据并行和线程并行。将问题划分为可以由线程块并行独立解决的<strong>粗略</strong>子问题，并将每个子问题划分为可以由块内所有线程并行协作解决的更<strong>精细</strong>的部分。这种分解通过允许线程在解决每个子问题时进行协作来保留语言表达能力，同时实现自动可扩展性。实际上，每个线程块都可以在 GPU 内的任何可用multiprocessor上以乱序、并发或顺序调度，以便编译的 CUDA 程序可以在任意数量的多处理器上执行，如下图所示，并且只有运行时系统需要知道物理multiprocessor个数。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222102553497.png"
+                      class="" title="image-20230222102553497"
+                >
+
+<p>GPU 是围绕一系列流式多处理器 (SM: Streaming Multiprocessors) 构建的。 多线程程序被划分为彼此独立执行的线程块，因此具有更多multiprocessor的 GPU 将比具有更少多处理器的 GPU 在更短的时间内完成程序执行。<strong>这种可扩展的编程模型允许 GPU 架构通过简单地扩展multiprocessor和内存分区的数量来跨越广泛的市场范围</strong></p>
+<h1 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h1><p>CUDA C++ 通过允许程序员定义称为kernel的 C++ 函数来扩展 C++，当调用内核时，由 N 个不同的 CUDA 线程并行执行 N 次，而不是像常规 C++ 函数那样只执行一次。</p>
+<p><strong>使用 <code>__global__</code> 声明说明符定义内核，并使用新的 <code>&lt;&lt;&lt;...&gt;&gt;&gt;</code> 执行配置语法指定内核调用的 CUDA 线程数（</strong>请参阅 <a class="link"   target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#c-language-extensions" >C++ 语言扩展 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）。 每个执行内核的线程都有一个唯一的线程 ID，可以通过内置变量在内核中访问。</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Kernel definition</span></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">VecAdd</span><span class="params">(<span class="type">float</span>* A, <span class="type">float</span>* B, <span class="type">float</span>* C)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = threadIdx.x;</span><br><span class="line">    C[i] = A[i] + B[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Kernel invocation with N threads</span></span><br><span class="line">    VecAdd&lt;&lt;&lt;<span class="number">1</span>, N&gt;&gt;&gt;(A, B, C);     <span class="comment">//N 个线程中的每一个线程都会执行一个加法。</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="线程层次"><a href="#线程层次" class="headerlink" title="线程层次"></a>线程层次</h1><p>threadIdx 是一个 3 分量向量，因此可以使用一维、二维或三维的线程索引来识别线程，形成一个一维、二维或三维的线程块，称为block。 </p>
+<p>线程的索引和它的线程 ID 以一种直接的方式相互关联：<strong>对于一维块，它们是相同的</strong>； 对于大小为(Dx, Dy)的二维块，索引为(x, y)的线程的线程ID为**(x + y*Dx)*<em>； 对于大小为 (Dx, Dy, Dz) 的三维块，索引为 (x, y, z) 的线程的线程 ID 为 **(x + y<em>Dx + z</em>Dx</em>Dy)**。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220153102054.png"
+                      class="" title="image-20230220153102054"
+                >
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-0-CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B01/4.png"
+                      alt="img"
+                ></p>
+<p>当内核函数开始执行，如何组织GPU的线程就变成了最主要的问题了，我们必须明确，<strong>一个核函数只能有一个grid</strong>，一个grid（<strong>grid是由线程矩阵构成的</strong>）可以有很多个块，每个块可以有很多的线程，这种分层的组织结构使得我们的并行过程更加自如灵活：</p>
+<p>例如，下面的代码将两个大小为NxN的矩阵A和B相加，并将结果存储到矩阵C中:</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Kernel definition</span></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">MatAdd</span><span class="params">(<span class="type">float</span> A[N][N], <span class="type">float</span> B[N][N],</span></span><br><span class="line"><span class="params">                       <span class="type">float</span> C[N][N])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = threadIdx.x;				<span class="comment">//grid中的线程数组的行</span></span><br><span class="line">    <span class="type">int</span> j = threadIdx.y;				<span class="comment">//grid中的线程数组的列</span></span><br><span class="line">    C[i][j] = A[i][j] + B[i][j];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Kernel invocation with one block of N * N * 1 threads</span></span><br><span class="line">    <span class="type">int</span> numBlocks = <span class="number">1</span>;</span><br><span class="line">    dim3 <span class="title function_">threadsPerBlock</span><span class="params">(N, N)</span>;          <span class="comment">//N*N*1矩阵</span></span><br><span class="line">    MatAdd&lt;&lt;&lt;numBlocks, threadsPerBlock&gt;&gt;&gt;(A, B, C);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>每个块的线程数量是有限制的，因为一个块的所有线程都应该驻留在同一个处理器核心上，并且必须共享该核心有限的内存资源。在当前的gpu上，一个线程块可能包含多达1024个线程。但是，<strong>一个内核（grid）可以由多个形状相同的线程块执行</strong>，因此线程总数等于每个块的线程数乘以块数。</p>
+<p><code>&lt;&lt;&lt;...&gt;&gt;&gt; </code>语法中指定的每个块的线程数和每个网格的块数可以是 <code>int</code> 或 <code>dim3</code> 类型。如上例所示，可以指定二维块或网格。</p>
+<p>扩展前面的<code>MatAdd()</code>示例来处理多个块，代码如下所示</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Kernel definition</span></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">MatAdd</span><span class="params">(<span class="type">float</span> A[N][N], <span class="type">float</span> B[N][N],</span></span><br><span class="line"><span class="params"><span class="type">float</span> C[N][N])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = blockIdx.x * blockDim.x + threadIdx.x;			<span class="comment">//blockDim.x是块的宽度</span></span><br><span class="line">    <span class="type">int</span> j = blockIdx.y * blockDim.y + threadIdx.y;			<span class="comment">//blockDim.y是块的高度</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; N &amp;&amp; j &lt; N)</span><br><span class="line">        C[i][j] = A[i][j] + B[i][j];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Kernel invocation</span></span><br><span class="line">    dim3 <span class="title function_">threadsPerBlock</span><span class="params">(<span class="number">16</span>, <span class="number">16</span>)</span>;</span><br><span class="line">    dim3 <span class="title function_">numBlocks</span><span class="params">(N / threadsPerBlock.x, N / threadsPerBlock.y)</span>;</span><br><span class="line">    MatAdd&lt;&lt;&lt;numBlocks, threadsPerBlock&gt;&gt;&gt;(A, B, C);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>注意：程块可以独立执行，并行或串行。 这种独立性要求允许跨任意数量的内核以任意顺序调度线程块，如下图所示，使程序员能够编写随内核数量扩展的代码。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222143656183.png"
+                      class="" title="image-20230222143656183"
+                >
+
+<p><strong>块内的线程可以通过一些共享内存共享数据并通过同步它们的执行来协调内存访问来进行协作</strong>。 更准确地说，可以通过调用 <code>__syncthreads()</code> 内部函数来指定内核中的同步点； <code>__syncthreads()</code> 充当屏障，块中的所有线程必须等待，然后才能继续。  除了<code> __syncthreads()</code> 之外，<a class="link"   target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cooperative-groups" >Cooperative Groups API <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 还提供了一组丰富的线程同步示例。</p>
+<h1 id="存储单元层次"><a href="#存储单元层次" class="headerlink" title="存储单元层次"></a>存储单元层次</h1><p><strong>CUDA 线程可以在执行期间从多个内存空间访问数据，</strong>如下图所示。每个线程都有私有的本地内存。 每个线程块都具有对该块的所有线程可见的共享内存，并且具有与该块相同的生命周期。 所有线程都可以访问相同的全局内存。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222143927527.png"
+                      class="" title="image-20230222143927527"
+                >
+
+<p>还有两个额外的只读内存空间可供所有线程访问：<strong>常量和纹理内存空间</strong>。 全局、常量和纹理内存空间针对不同的内存使用进行了优化（请参阅<a class="link"   target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#device-memory-accesses" >设备内存访问 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）。 纹理内存还为某些特定数据格式提供不同的寻址模式以及数据过滤（请参阅<a class="link"   target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#texture-and-surface-memory" >纹理和表面内存 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）。</p>
+<p><strong>全局、常量和纹理内存空间在同一应用程序的内核启动中是持久的。</strong></p>
+<h1 id="异构编程"><a href="#异构编程" class="headerlink" title="异构编程"></a>异构编程</h1><p>如下图所示，CUDA 编程模型假定 CUDA 线程在物理独立的设备上执行，该设备作为运行 C++ 程序的主机的协处理器运行。例如，当内核在 GPU 上执行而 C++ 程序的其余部分在 CPU 上执行时，就是异构编程这种情况。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230222144438047.png"
+                      class="" title="image-20230222144438047"
+                >
+
+<p>CUDA 编程模型还假设主机(<code>host</code>)和设备(<code>device</code>)都在 DRAM 中维护自己独立的内存空间，分别称为主机内存和设备内存。<strong>因此，程序通过调用 CUDA 运行时来管理内核可见的全局、常量和纹理内存空间。</strong>这包括设备内存分配和释放以及主机和设备内存之间的数据传输。</p>
+<p><strong>统一内存提供托管内存来桥接主机和设备内存空间</strong>。托管内存可从系统中的所有 CPU 和 GPU 访问，作为具有公共地址空间的单个连贯内存映像。此功能可实现设备内存的超额订阅，并且无需在主机和设备上显式镜像数据，从而大大简化了移植应用程序的任务。有关统一内存的介绍，请参阅统一<a class="link"   target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#um-unified-memory-programming-hd" >内存编程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<p><strong>注:串行代码在主机(<code>host</code>)上执行，并行代码在设备(<code>device</code>)上执行。</strong></p>
+<h1 id="异步SIMT编程模型"><a href="#异步SIMT编程模型" class="headerlink" title="异步SIMT编程模型"></a>异步SIMT编程模型</h1><p>在 CUDA 编程模型中，线程是进行计算或内存操作的最低抽象级别。 异步编程模型定义了与 CUDA 线程相关的异步操作的行为。</p>
+<p>异步编程模型为 CUDA 线程之间的同步定义了<a class="link"   target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#aw-barrier" >异步屏障 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的行为。 该模型还解释并定义了如何使用 cuda::memcpy_async 在 GPU计算时从全局内存中异步移动数据。</p>
+<h2 id="异步操作"><a href="#异步操作" class="headerlink" title="异步操作"></a>异步操作</h2><p><strong>异步操作定义为由CUDA线程发起的操作，并且与其他线程一样异步执行。</strong>在结构良好的程序中，一个或多个CUDA线程与异步操作同步。发起异步操作的CUDA线程不需要在同步线程中。<strong>这样的异步线程（as-if 线程）总是与发起异步操作的 CUDA 线程相关联。异步操作使用同步对象来同步操作的完成。</strong>这样的同步对象可以由用户显式管理（例如，<code>cuda::memcpy_async</code>）或在库中隐式管理（例如，<code>cooperative_groups::memcpy_async</code>）。</p>
+<h1 id="并行运算与计算机架构"><a href="#并行运算与计算机架构" class="headerlink" title="并行运算与计算机架构"></a>并行运算与计算机架构</h1><h2 id="并行计算"><a href="#并行计算" class="headerlink" title="并行计算"></a>并行计算</h2><p>我们最早的计算机不是并行的，因为当时一个CPU只有一个核，所以不可能一个核同时执行两个计算，后来我们的应用逐步要求计算量越来越高，所以单核的计算速度也在逐步上升，后来大规模并行应用产生了，我们迫切的需要能够同时处理很多数据的机器，比如图像处理，以及处理大规模的同时访问的服务器后台。</p>
+<p>并行计算其实设计到两个不同的技术领域：</p>
+<ul>
+<li>计算机架构（硬件）</li>
+<li>并行程序设计（软件）</li>
+</ul>
+<p>硬件主要的目标就是为软件提供更快的计算速度，更低的性能功耗比，硬件结构上支持更快的并行。<br>软件的主要目的是使用当前的硬件压榨出最高的性能，给应用提供更稳定快速的计算结果。<br>我们传统的计算机结构一般主要分成三部分：</p>
+<ul>
+<li>内存（指令内存，数据内存）</li>
+<li>中央处理单元（控制单元和算数逻辑单元）</li>
+<li>输入、输出接口</li>
+</ul>
+<p><strong>写并行和串行的最大区别就是，写串行程序可能不需要学习不同的硬件平台，但是写并行程序就需要对硬件有一定的了解了。</strong></p>
+<h3 id="并行性"><a href="#并行性" class="headerlink" title="并行性"></a>并行性</h3><p>写并行程序主要是分解任务，我们一般把一个程序看成是指令和数据的组合，当然并行也可以分为这两种：</p>
+<ul>
+<li>指令并行</li>
+<li>数据并行</li>
+</ul>
+<p><strong>我们的任务更加关注数据并行</strong>，所以我们的主要任务是分析数据的相关性，哪些可以并行，哪些不能不行。</p>
+<p>CUDA非常适合数据并行，数据并行程序设计，第一步就是把数据依据线程进行划分</p>
+<ol>
+<li>块划分，把一整块数据切成小块，每个小块随机的划分给一个线程，每个块的执行顺序随机</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135333139.png"
+                      class="" title="image-20230220135333139"
+                >
+
+<ol start="2">
+<li>周期划分，线程按照顺序处理相邻的数据块，每个线程处理多个数据块</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135407638.png"
+                      class="" title="image-20230220135407638"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135547259.png"
+                      class="" title="image-20230220135547259"
+                >
+
+<p>下面是数据集上的划分上看：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220135618356.png"
+                      class="" title="image-20230220135618356"
+                >
+
+<p><strong>不同的数据划分严重影响程序性能，所以针对不同的问题和不同计算机结构，我们要通过和理论和试验共同来决定最终最优的数据划分。</strong></p>
+<h2 id="计算机架构"><a href="#计算机架构" class="headerlink" title="计算机架构"></a>计算机架构</h2><h3 id="按进入cpu方式划分"><a href="#按进入cpu方式划分" class="headerlink" title="按进入cpu方式划分"></a>按进入cpu方式划分</h3><p>划分不同计算机结构的方法有很多，广泛使用的一种被称为佛林分类法<strong>Flynn’s Taxonomy</strong>，它<strong>根据指令和数据进入CPU的方式分类</strong>，分为以下四类：</p>
+<p>分别以数据和指令进行分析：</p>
+<ul>
+<li>单指令单数据SISD（传统串行计算机，386）</li>
+<li>单指令多数据SIMD（并行架构，比如向量机，所有核心指令唯一，但是数据不同，现在CPU基本都有这类的向量指令）</li>
+<li>多指令单数据MISD（少见，多个指令围殴一个数据）</li>
+<li>多指令多数据MIMD（并行架构，多核心，多指令，异步处理多个数据流，从而实现空间上的并行，MIMD多数情况下包含SIMD，就是MIMD有很多计算核，计算核支持SIMD）</li>
+</ul>
+<h3 id="根据内存划分"><a href="#根据内存划分" class="headerlink" title="根据内存划分"></a>根据内存划分</h3><ol>
+<li>分布式内存的多节点系统</li>
+<li>共享内存的多处理器系统</li>
+</ol>
+<p>第一个更大，通常叫做集群，就是一个机房好多机箱，每个机箱都有内存处理器电源等一些列硬件，<strong>通过网络互动</strong>，这样组成的就是分布式。</p>
+<p>第二个是<strong>单个主板有多个处理器</strong>，他们共享相同的主板上的内存，内存寻址空间相同<strong>，通过PCIe和内存互动</strong>。<br>GPU就属于众核系统。当然现在CPU也都是多核的了，但是他们还是有很大区别的：</p>
+<ul>
+<li>CPU适合执行复杂的逻辑，比如多分支，其核心比较重（复杂）</li>
+<li>GPU适合执行简单的逻辑，大量的数据计算，其吞吐量更高，但是核心比较轻（结构简单）</li>
+</ul>
+<h1 id="异构计算和CUDA"><a href="#异构计算和CUDA" class="headerlink" title="异构计算和CUDA"></a>异构计算和CUDA</h1><h2 id="异构计算"><a href="#异构计算" class="headerlink" title="异构计算"></a>异构计算</h2><p>不同的计算机架构就是异构，<strong>按照指令集划分或者按照内存结构划分</strong><br>GPU本来的任务是做图形图像的，也就是把数据处理成图形图像，图像有个特点就是并行度很高，基本上一定距离以外的像素点之间的计算是独立的，所以属于并行任务。</p>
+<h2 id="异构架构"><a href="#异构架构" class="headerlink" title="异构架构"></a>异构架构</h2><p>运行程序的时候，CPU像是一个控制者，指挥两台Titan完成工作后进行汇总，和下一步工作安排，所以CPU我们可以把它看做一个主机端，而完成大量计算的GPU是我们的计算设备。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220142104408.png"
+                      class="" title="image-20230220142104408"
+                >
+
+<p>上面这张图能大致反应CPU和GPU的架构不同。</p>
+<ul>
+<li>左图：一个四核CPU一般有四个ALU，ALU是完成逻辑计算的核心，也是我们平时说四核八核的核，控制单元，缓存也在片上，DRAM是内存，一般不在片上，CPU通过总线访问内存。</li>
+<li>右图：GPU，绿色小方块是ALU，<strong>我们注意红色框内的部分SM，这一组ALU公用一个Control单元和Cache</strong>，这个部分相当于一个完整的多核CPU，但是不同的是ALU多了，control部分变小，可见计算能力提升了，控制能力减弱了，所以对于控制（逻辑）复杂的程序，一个GPU的SM是没办法和CPU比较的，但是对逻辑简单，数据量大的任务，GPU更高效，并且一个GPU有好多个SM，而且越来越多。</li>
+</ul>
+<p>CPU和GPU之间通过<strong>PCIe（PCI总线）</strong>总线连接，用于传递指令和数据，这部分也是后面要讨论的性能瓶颈之一。<br>一个异构应用包含两种以上架构，所以代码也包括不止一部分：</p>
+<ul>
+<li>主机代码</li>
+<li>设备代码</li>
+</ul>
+<p>主机代码在主机端运行，被编译成主机架构的机器码，设备端的在设备上执行，被编译成设备架构的机器码，所以主机端的机器码和设备端的机器码是隔离的，自己执行自己的，没办法交换执行。主机端代码主要是控制设备，完成数据传输等控制类工作，设备端主要的任务就是计算。<br>因为当没有GPU的时候CPU也能完成这些计算，只是速度会慢很多，所以<strong>可以把GPU看成CPU的一个加速设备</strong>。<br>NVIDIA目前的计算平台（不是架构）有：</p>
+<ul>
+<li>Tegra</li>
+<li>Geforce</li>
+<li>Quadro</li>
+<li>Tesla</li>
+</ul>
+<p>每个平台针对不同的应用场景，比如Tegra用于嵌入式，Geforce是我们平时打游戏用到，Tesla是我们昨天租的那台腾讯云的，主要用于计算。</p>
+<p>上面是根据应用场景分类的几种平台。</p>
+<p>衡量GPU计算能力的主要靠下面两种<strong>容量</strong>特征：</p>
+<ul>
+<li>CUDA核心数量（越多越好）</li>
+<li>内存大小（越大越好）</li>
+</ul>
+<p>相应的也有计算能力的<strong>性能</strong>指标:</p>
+<ul>
+<li>峰值计算能力</li>
+<li>内存带宽</li>
+</ul>
+<p>CPU和GPU线程的区别：</p>
+<ol>
+<li>CPU线程是重量级实体，操作系统交替执行线程，线程上下文切换花销很大</li>
+<li>GPU线程是轻量级的，GPU应用一般包含成千上万的线程，多数在排队状态，线程之间切换基本没有开销。</li>
+<li><strong>CPU的核被设计用来尽可能减少一个或两个线程运行时间的延迟，而GPU核则是大量线程，最大幅度提高吞吐量</strong></li>
+</ol>
+<h3 id="CUDA：一种异构计算平台"><a href="#CUDA：一种异构计算平台" class="headerlink" title="CUDA：一种异构计算平台"></a>CUDA：一种异构计算平台</h3><p>CUDA平台不是单单指软件或者硬件，而是建立在Nvidia GPU上的一整套平台，并扩展出多语言支持</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220144203475.png"
+                      class="" title="image-20230220144203475"
+                >
+
+<p>CUDA C 是标准ANSI C语言的扩展，扩展出一些语法和关键字来编写设备端代码，而且CUDA库本身提供了大量API来操作设备完成计算。</p>
+<p>对于API也有两种不同的层次</p>
+<ul>
+<li>CUDA驱动API</li>
+<li>CUDA运行时API</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220144236703.png"
+                      class="" title="image-20230220144236703"
+                >
+
+<p><strong>驱动API是低级的API，使用相对困难，运行时API是高级API使用简单，其实现基于驱动API。</strong><br><strong>这两种API是互斥的</strong>，也就是你只能用一个，两者之间的函数不可以混合调用，只能用其中的一个库。</p>
+<p>一个CUDA应用通常可以分解为两部分，</p>
+<ul>
+<li>CPU 主机端代码</li>
+<li>GPU 设备端代码</li>
+</ul>
+<p>CUDA nvcc编译器会自动分离你代码里面的不同部分，如图中主机代码用C写成，使用本地的C语言编译器编译；设备端代码，也就是核函数，用CUDA C编写，通过nvcc编译，链接阶段，在内核程序调用或者明显的GPU设备操作时，添加运行时库。<strong>注意：核函数是我们后面主要接触的一段代码，就是设备上执行的程序段</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220144417197.png"
+                      class="" title="image-20230220144417197"
+                >
+
+<h2 id="“Hello-World”"><a href="#“Hello-World”" class="headerlink" title="“Hello World”"></a>“Hello World”</h2><div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">*hello_world.cu</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">hello_world</span><span class="params">(<span class="type">void</span>)</span>      <span class="comment">/*__global__声明是核函数*/</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;GPU: Hello world!\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;CPU: Hello world!\n&quot;</span>);</span><br><span class="line">  hello_world&lt;&lt;&lt;<span class="number">1</span>,<span class="number">10</span>&gt;&gt;&gt;(); 				<span class="comment">//&lt;&lt;&lt;&gt;&gt;&gt;是对设备进行配置的参数</span></span><br><span class="line">  cudaDeviceReset();<span class="comment">//if no this line ,it can not output hello world from gpu</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong><code>cudaDeviceReset();</code></strong></p>
+<p><strong>这句话包含了隐式同步</strong>，GPU和CPU执行程序是异步的，核函数调用后成立刻会到主机线程继续，而不管GPU端核函数是否执行完毕，所以上面的程序就是GPU刚开始执行，CPU已经退出程序了，所以我们要等GPU执行完了，再退出主机线程。<br>一般CUDA程序分成下面这些步骤：</p>
+<ol>
+<li>分配GPU内存</li>
+<li>拷贝内存到设备</li>
+<li>调用CUDA内核函数来执行计算</li>
+<li>把计算完成数据拷贝回主机端</li>
+<li>内存销毁</li>
+</ol>
+<p>CUDA中有两个模型是决定性能的：</p>
+<ul>
+<li>内存层次结构</li>
+<li>线程层次结构</li>
+</ul>
+<p>CUDA C写核函数的时候我们只写一小段串行代码，但是这段代码被成千上万的线程执行，所有线程执行的代码都是相同的，<strong>CUDA编程模型提供了一个层次化的组织线程，直接影响GPU上的执行顺序。</strong></p>
+<p>CUDA抽象了硬件实现：</p>
+<ol>
+<li>线程组的层次结构</li>
+<li>内存的层次结构</li>
+<li>障碍同步</li>
+</ol>
+<p>这些都是我们后面要研究的，线程，内存是主要研究的对象</p>
+<h1 id="CUDA编程模型概述"><a href="#CUDA编程模型概述" class="headerlink" title="CUDA编程模型概述"></a>CUDA编程模型概述</h1><p>CUDA编程模型为应用和硬件设备之间的桥梁，所以CUDA C是编译型语言，不是解释型语言。</p>
+<p><strong>编译型语言：编译完再运行    解释型语言：一边编译一边运行</strong><br>编程模型可以理解为，我们要用到的<strong>语法，内存结构，线程结构</strong>等这些我们写程序时我们自己控制的部分，这些部分控制了异构计算设备的工作模式，都是属于编程模型。<br>GPU中大致可以分为：</p>
+<ul>
+<li>核函数</li>
+<li>内存管理</li>
+<li>线程管理</li>
+<li>流</li>
+</ul>
+<p>等几个关键部分。<br>以上这些理论同时也适用于其他非CPU+GPU异构的组合。<br>下面我们会说两个我们GPU架构下特有几个功能：</p>
+<ul>
+<li>通过组织层次结构在GPU上组织线程的方法</li>
+<li>通过组织层次结构在GPU上组织内存的方法</li>
+</ul>
+<p>从宏观上我们可以从以下几个环节完成CUDA应用开发：</p>
+<ol>
+<li>领域层：分析问题</li>
+<li>逻辑层：编程</li>
+<li>硬件层：通过理解线程如何映射到机器上，能充分帮助我们提高性能。</li>
+</ol>
+<p>CUDA模型主要的一个功能就是<strong>线程层</strong>结构抽象的概念，以允许控制线程行为。这个抽象为并行编程提供了良好的可扩展性（这个扩展性后面有提到，就是一个CUDA程序可以在不同的GPU机器上运行，即使计算能力不同）。</p>
+<h2 id="CUDA编程结构"><a href="#CUDA编程结构" class="headerlink" title="CUDA编程结构"></a>CUDA编程结构</h2><p>一个异构环境，通常有多个CPU多个GPU，他们都通过PCIe总线相互通信，也是通过PCIe总线分隔开的。所以我们要区分一下两种设备的内存：</p>
+<ul>
+<li>主机：CPU及其内存</li>
+<li>设备：GPU及其内存</li>
+</ul>
+<p>一个完整的CUDA应用可能的执行顺序如下图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220152027225.png"
+                      class="" title="image-20230220152027225"
+                >
+
+<p><strong>从host的串行到调用核函数（核函数被调用后控制马上归还主机线程，也就是在第一个并行代码执行时，很有可能第二段host代码已经开始同步执行了）。</strong></p>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>内存管理在传统串行程序是非常常见的，寄存器空间，栈空间内的内存由机器自己管理，堆空间由用户控制分配和释放，CUDA程序同样，只是CUDA提供的API可以分配管理设备上的内存，当然也可以用CDUA管理主机上的内存，主机上的传统标准库也能完成主机内存管理。</p>
+<p>下面表格有一些主机API和CUDA C的API的对比：</p>
+<table>
+<thead>
+<tr>
+<th align="center">标准C函数</th>
+<th align="center">CUDA C 函数</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">malloc</td>
+<td align="center">cudaMalloc</td>
+<td align="center">内存分配</td>
+</tr>
+<tr>
+<td align="center">memcpy</td>
+<td align="center">cudaMemcpy</td>
+<td align="center">内存复制</td>
+</tr>
+<tr>
+<td align="center">memset</td>
+<td align="center">cudaMemset</td>
+<td align="center">内存设置</td>
+</tr>
+<tr>
+<td align="center">free</td>
+<td align="center">cudaFree</td>
+<td align="center">释放内存</td>
+</tr>
+</tbody></table>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cudaError_t <span class="title function_">cudaMemcpy</span><span class="params">(<span class="type">void</span> * dst,<span class="type">const</span> <span class="type">void</span> * src,<span class="type">size_t</span> count,</span></span><br><span class="line"><span class="params">  cudaMemcpyKind kind)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这个函数是内存拷贝过程，可以完成以下几种过程（cudaMemcpyKind kind）</p>
+<ul>
+<li>cudaMemcpyHostToHost</li>
+<li>cudaMemcpyHostToDevice</li>
+<li>cudaMemcpyDeviceToHost</li>
+<li>cudaMemcpyDeviceToDevice</li>
+</ul>
+<p>如果函数执行成功，则会返回 cudaSuccess 否则返回 cudaErrorMemoryAllocation</p>
+<p>使用下面这个指令可以吧上面的错误代码翻译成详细信息：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>* <span class="title function_">cudaGetErrorString</span><span class="params">(cudaError_t error)</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="内存层次"><a href="#内存层次" class="headerlink" title="内存层次"></a>内存层次</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220153102054-16849365937621.png"
+                      class="" title="image-20230220153102054"
+                >
+
+<h2 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h2><p>当内核函数开始执行，如何组织GPU的线程就变成了最主要的问题了，我们必须明确，<strong>一个核函数只能有一个grid，grid是二维的</strong>，一个grid可以有很多个块，每个块可以有很多的线程，这种分层的组织结构使得我们的并行过程更加自如灵活：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-0-CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B01/4.png"
+                      alt="img"
+                ></p>
+<p>一个线程块block中的线程可以完成下述协作：</p>
+<ul>
+<li>同步</li>
+<li>共享内存</li>
+</ul>
+<p><strong>不同块内线程不能相互影响！他们是物理隔离的！</strong><br>依靠下面两个内置结构体确定<strong>线程标号</strong>：</p>
+<ul>
+<li>blockIdx（线程块在线程网格内的位置索引）</li>
+<li>threadIdx（线程在线程块内的位置索引）</li>
+</ul>
+<p>注意这里的Idx是index的缩写，这两个内置结构体基于 uint3 定义，包含三个无符号整数的结构，通过三个字段来指定：</p>
+<ul>
+<li>blockIdx.x</li>
+<li>blockIdx.y</li>
+<li>blockIdx.z</li>
+<li>threadIdx.x</li>
+<li>threadIdx.y</li>
+<li>threadIdx.z</li>
+</ul>
+<p>当然我们要有同样对应的两个结构体<strong>（blockIdx和threadIdx）</strong>来保存其范围：</p>
+<ul>
+<li>blockDim</li>
+<li>gridDim</li>
+</ul>
+<p>他们是dim3类型(基于uint3定义的数据结构)的变量，也包含三个字段x,y,z.</p>
+<ul>
+<li>blockDim.x</li>
+<li>blockDim.y</li>
+<li>blockDim.z</li>
+</ul>
+<p><strong>网格和块的维度一般是二维和三维的，也就是说一个网格通常被分成二维的块，而每个块常被分成三维的线程。</strong><br>注意：dim3是手工定义的，主机端可见。uint3是设备端在执行的时候可见的，不可以在核函数运行时修改，初始化完成后uint3值就不变了。</p>
+<p>下面有一段代码，块的索引和维度：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">*1_check_dimension</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cuda_runtime.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">checkIndex</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;threadIdx:(%d,%d,%d) blockIdx:(%d,%d,%d) blockDim:(%d,%d,%d)\</span></span><br><span class="line"><span class="string">  gridDim(%d,%d,%d)\n&quot;</span>,threadIdx.x,threadIdx.y,threadIdx.z,</span><br><span class="line">  blockIdx.x,blockIdx.y,blockIdx.z,blockDim.x,blockDim.y,blockDim.z,</span><br><span class="line">  gridDim.x,gridDim.y,gridDim.z);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> nElem=<span class="number">6</span>;</span><br><span class="line">  dim3 <span class="title function_">block</span><span class="params">(<span class="number">3</span>)</span>;    <span class="comment">//3*1*1</span></span><br><span class="line">  dim3 <span class="title function_">grid</span><span class="params">((nElem+block.x<span class="number">-1</span>)/block.x)</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;grid.x %d grid.y %d grid.z %d\n&quot;</span>,grid.x,grid.y,grid.z);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;block.x %d block.y %d block.z %d\n&quot;</span>,block.x,block.y,block.z);</span><br><span class="line">  checkIndex&lt;&lt;&lt;grid,block&gt;&gt;&gt;();</span><br><span class="line">  cudaDeviceReset();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来这段代码是检查网格和块的大小的：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">*2_grid_block</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cuda_runtime.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> ** argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> nElem=<span class="number">1024</span>;</span><br><span class="line">  dim3 <span class="title function_">block</span><span class="params">(<span class="number">1024</span>)</span>;			<span class="comment">//1024*1*1</span></span><br><span class="line">  dim3 <span class="title function_">grid</span><span class="params">((nElem<span class="number">-1</span>)/block.x+<span class="number">1</span>)</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;grid.x %d block.x %d\n&quot;</span>,grid.x,block.x);</span><br><span class="line"></span><br><span class="line">  block.x=<span class="number">512</span>;</span><br><span class="line">  grid.x=(nElem<span class="number">-1</span>)/block.x+<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;grid.x %d block.x %d\n&quot;</span>,grid.x,block.x);</span><br><span class="line"></span><br><span class="line">  block.x=<span class="number">256</span>;</span><br><span class="line">  grid.x=(nElem<span class="number">-1</span>)/block.x+<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;grid.x %d block.x %d\n&quot;</span>,grid.x,block.x);</span><br><span class="line"></span><br><span class="line">  block.x=<span class="number">128</span>;</span><br><span class="line">  grid.x=(nElem<span class="number">-1</span>)/block.x+<span class="number">1</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;grid.x %d block.x %d\n&quot;</span>,grid.x,block.x);</span><br><span class="line"></span><br><span class="line">  cudaDeviceReset();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>网格和块的维度存在几个限制因素，<strong>块大小主要与可利用的计算资源有关，</strong>如寄存器共享内存。<br><strong>分成网格和块的方式可以使得我们的CUDA程序可以在任意的设备上执行。</strong></p>
+<h2 id="核函数概述"><a href="#核函数概述" class="headerlink" title="核函数概述"></a>核函数概述</h2><p><strong>核函数就是在CUDA模型上诸多线程中运行的那段串行代码</strong>，这段代码在设备上运行，用NVCC编译，产生的机器码是GPU的机器码。</p>
+<h3 id="启动核函数"><a href="#启动核函数" class="headerlink" title="启动核函数"></a>启动核函数</h3><p>启动核函数，通过的以下的ANSI C 扩展出的CUDA C指令：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kernel_name&lt;&lt;&lt;grid,block&gt;&gt;&gt;(argument <span class="built_in">list</span>);</span><br></pre></td></tr></table></figure></div>
+
+<p>其标准C的原型就是C语言函数调用</p>
+<p>这个三个尖括号’&lt;&lt;&lt;grid,block&gt;&gt;&gt;’内是对设备代码执行的<strong>线程结构</strong>的配置（或者简称为对内核进行配置），也就是我们上一篇中提到的<strong>线程结构中的网格，块</strong>。回忆一下上文，我们通过CUDA C内置的数据类型dim3类型的变量来配置grid和block<strong>（上文提到过：在设备端访问grid和block属性的数据类型是uint3不能修改的常类型结构，这里反复强调一下）</strong>。</p>
+<p>通过指定grid和block的维度，我们可以配置：</p>
+<ul>
+<li><strong>内核中线程的数目</strong></li>
+<li><strong>内核中使用的线程布局</strong></li>
+</ul>
+<p>我们可以使用dim3类型的grid维度和block维度配置内核，也可以使用int类型的变量，或者常量直接初始化：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kernel_name&lt;&lt;&lt;<span class="number">4</span>,<span class="number">8</span>&gt;&gt;&gt;(argument <span class="built_in">list</span>);    <span class="comment">//4是线程数目，8是线程布局</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>上面这条指令的线程布局是：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-1-CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B02/1.png"
+                      alt="img"
+                ></p>
+<p>我们的核函数是同时复制到多个线程执行的，线程有唯一的标识，由于设备内存是线性的（基本市面上的内存硬件都是线性形式存储数据的）我们观察上图，可以用threadIdx.x 和blockIdx.x 来组合获得对应的线程的唯一标识（后面我们会看到，threadIdx和blockIdx能组合出很多不一样的效果）</p>
+<p>接下来我们就是修改代码的时间了，改变核函数的配置，产生运行出结果一样，但效率不同的代码：</p>
+<ol>
+<li>一个块：</li>
+</ol>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kernel_name&lt;&lt;&lt;<span class="number">1</span>,<span class="number">32</span>&gt;&gt;&gt;(argument <span class="built_in">list</span>);</span><br></pre></td></tr></table></figure></div>
+
+<ol>
+<li>32个块</li>
+</ol>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kernel_name&lt;&lt;&lt;<span class="number">32</span>,<span class="number">1</span>&gt;&gt;&gt;(argument <span class="built_in">list</span>);</span><br></pre></td></tr></table></figure></div>
+
+<p>上述代码如果没有特殊结构在核函数中，执行结果应该一致，但是有些效率会一直比较低。</p>
+<p>主机等待设备端执行，不主动返回可以用下面这个指令：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cudaError_t <span class="title function_">cudaDeviceSynchronize</span><span class="params">(<span class="type">void</span>)</span>;    <span class="comment">//显式</span></span><br><span class="line">cudaDeviceReset();							<span class="comment">//隐式</span></span><br><span class="line">cudaError_t <span class="title function_">cudaMemcpy</span><span class="params">(<span class="type">void</span>* dst,<span class="type">const</span> <span class="type">void</span> * src,</span></span><br><span class="line"><span class="params">  <span class="type">size_t</span> count,cudaMemcpyKind kind)</span>;        <span class="comment">//隐式，当核函数启动后的下一条指令就是从设备复制数据回主机端，那么主机端必须要等待设备端计算完成。</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>所有CUDA核函数的启动都是异步的，这点与C语言是完全不同的</strong></p>
+<h3 id="编写核函数"><a href="#编写核函数" class="headerlink" title="编写核函数"></a>编写核函数</h3><p>声明核函数有一个比较模板化的方法：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__global__ <span class="type">void</span> <span class="title function_">kernel_name</span><span class="params">(argument <span class="built_in">list</span>)</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>注意：声明和定义是不同的，这点CUDA与C语言是一致的</strong></p>
+<p>在C语言函数前没有的限定符<strong>global</strong> ,CUDA C中还有一些其他我们在C中没有的限定符，如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">限定符</th>
+<th align="center">执行</th>
+<th align="center">调用</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>global</strong></td>
+<td align="center">设备端执行</td>
+<td align="center">可以从主机调用也可以从计算能力3以上的设备调用</td>
+<td align="center">必须有一个void的返回类型</td>
+</tr>
+<tr>
+<td align="center"><strong>device</strong></td>
+<td align="center">设备端执行</td>
+<td align="center">设备端调用</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong>host</strong></td>
+<td align="center">主机端执行</td>
+<td align="center">主机调用</td>
+<td align="center">可以省略</td>
+</tr>
+</tbody></table>
+<p>而且这里有个特殊的情况就是有些函数可以同时定义为 <strong>device</strong> 和 <strong>host</strong> ，这种函数可以同时被设备和主机端的代码调用，主机端代码调用函数很正常，设备端调用函数与C语言一致，但是要声明成设备端代码，告诉nvcc编译成设备机器码，同时声明主机端设备端函数，那么就要告诉编译器，生成两份不同设备的机器码。</p>
+<p>Kernel核函数编写有以下限制</p>
+<ol>
+<li><strong>只能访问设备内存</strong></li>
+<li><strong>必须有void返回类型</strong></li>
+<li>不支持可变数量的参数</li>
+<li>不支持静态变量</li>
+<li>显示异步行为</li>
+</ol>
+<p>并行程序中经常的一种现象：把for并行化。<br>例如：<br>串行：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">sumArraysOnHost</span><span class="params">(<span class="type">float</span> *A, <span class="type">float</span> *B, <span class="type">float</span> *C, <span class="type">const</span> <span class="type">int</span> N)</span> &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">    C[i] = A[i] + B[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>并行：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__global__ <span class="type">void</span> <span class="title function_">sumArraysOnGPU</span><span class="params">(<span class="type">float</span> *A, <span class="type">float</span> *B, <span class="type">float</span> *C)</span> &#123;</span><br><span class="line">  <span class="type">int</span> i = threadIdx.x;</span><br><span class="line">  C[i] = A[i] + B[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="验证核函数"><a href="#验证核函数" class="headerlink" title="验证核函数"></a>验证核函数</h3><div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kernel_name&lt;&lt;&lt;<span class="number">1</span>,<span class="number">1</span>&gt;&gt;&gt;(argument <span class="built_in">list</span>)    <span class="comment">//调试时可以把核函数配置成单线程的</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>都是并行操作，难以发现错误，利用下面函数进行错误处理</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CHECK(call)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">const</span> cudaError_t error=call;</span><br><span class="line">  <span class="keyword">if</span>(error!=cudaSuccess)</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;ERROR: %s:%d,&quot;</span>,__FILE__,__LINE__);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;code:%d,reason:%s\n&quot;</span>,error,cudaGetErrorString(error));</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>获得每个函数执行后的返回结果，对不成功的信息加以处理</strong>，CUDA C 的API每个调用都会返回一个错误代码，release版本中可以去除这部分，但是开发的时候一定要有。</p>
+<h2 id="编译执行"><a href="#编译执行" class="headerlink" title="编译执行"></a>编译执行</h2><div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvcc xxxx.cu -o xxxx</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="给核函数计时"><a href="#给核函数计时" class="headerlink" title="给核函数计时"></a>给核函数计时</h1><h2 id="用CPU计时"><a href="#用CPU计时" class="headerlink" title="用CPU计时"></a>用CPU计时</h2><div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">clock_t</span> start, finish;</span><br><span class="line">start = clock();</span><br><span class="line"><span class="comment">// 要测试的部分</span></span><br><span class="line">finish = clock();</span><br><span class="line">duration = (<span class="type">double</span>)(finish - start) / CLOCKS_PER_SEC;</span><br></pre></td></tr></table></figure></div>
+
+<p>clock()是个关键的函数，“clock函数测出来的时间为进程运行时间，单位为滴答数(ticks)”，在不同的系统中值可能不同。<strong>必须注意的是，并行程序这种计时方式有严重问题</strong><br>这里我们使用<strong>gettimeofday</strong>() 函数</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/time.h&gt;</span>   <span class="comment">//gettimeofday是linux下的一个库函数，创建一个cpu计时器，从1970年1月1日0点以来到现在的秒数，需要头文件sys/time.h</span></span></span><br><span class="line"><span class="type">double</span> <span class="title function_">cpuSecond</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tp</span>;</span></span><br><span class="line">  gettimeofday(&amp;tp,<span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">return</span>((<span class="type">double</span>)tp.tv_sec+(<span class="type">double</span>)tp.tv_usec*<span class="number">1e-6</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cuda_runtime.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;freshman.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">sumArraysGPU</span><span class="params">(<span class="type">float</span>*a,<span class="type">float</span>*b,<span class="type">float</span>*res,<span class="type">int</span> N)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> i=blockIdx.x*blockDim.x+threadIdx.x;</span><br><span class="line">  <span class="keyword">if</span>(i &lt; N)</span><br><span class="line">    res[i]=a[i]+b[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// set up device.....</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// init data ......</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//timer</span></span><br><span class="line">  <span class="type">double</span> iStart,iElaps;</span><br><span class="line">  iStart=cpuSecond();		<span class="comment">//返回一个秒数</span></span><br><span class="line">  sumArraysGPU&lt;&lt;&lt;grid,block&gt;&gt;&gt;(a_d,b_d,res_d,nElem);</span><br><span class="line">  cudaDeviceSynchronize();  <span class="comment">//同步函数，如果不加，返回的是核函数调用和执行的时间间隔</span></span><br><span class="line">  iElaps=cpuSecond()-iStart;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ......</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220185957721.png"
+                      class="" title="image-20230220185957721"
+                >
+
+<p>我们要测试的是2<del>4的时间，但是用CPU计时方法，只能测试1</del>5的时间，所以测试得到的时间偏长。</p>
+<p>注意：数据不能被完整切块的时候核函数的执行时间与完整切块相比会慢很多，这个我们可以使用一点小技巧，比如只传输可完整切割数据块，然后剩下的1，2个使用cpu计算，这种技巧后面有介绍，以及包括如何选择系数。</p>
+<h2 id="理论界限最大化"><a href="#理论界限最大化" class="headerlink" title="理论界限最大化"></a>理论界限最大化</h2><p>得到了实际操作值，我们需要知道的是我们能优化的极限值是多少，也就是机器的理论计算极限，这个极限我们永远也达不到，但是我们必须明确的知道，比如理论极限是2秒，我们已经从10秒优化到2.01秒了，基本就没有必要再继续花大量时间优化速度了，而应该考虑买更多的机器或者更新的设备。<br>各个设备的理论极限可以通过其芯片说明计算得到，比如说：</p>
+<ul>
+<li>Tesla K10 单精度峰值浮点数计算次数：745MHz核心频率 x 2GPU&#x2F;芯片 x（8个多处理器 x 192个浮点计算单元 x 32 核心&#x2F;多处理器） x 2 OPS&#x2F;周期 &#x3D;4.58 TFLOPS</li>
+<li>Tesla K10 内存带宽峰值： 2GPU&#x2F;芯片 x 256 位 x 2500 MHz内存时钟 x 2 DDR&#x2F;8位&#x2F;字节 &#x3D; 320 GB&#x2F;s</li>
+<li>指令比：字节 4.58 TFLOPS&#x2F;320 GB&#x2F;s &#x3D;13.6 个指令： 1个字节</li>
+</ul>
+<h1 id="组织并行线程"><a href="#组织并行线程" class="headerlink" title="组织并行线程"></a>组织并行线程</h1><p>编程模型中我们大概的介绍了CUDA编程的几个关键点，包括内存，kernel，以及今天我们要讲的线程组织形式，2.0中还介绍了每个线程的编号是依靠，块的坐标（blockIdx.x等），网格的大小（gridDim.x 等），线程编号（threadIdx.x等），线程的大小（tblockDim.x等）<br>这一篇我们就详细介绍每一个线程是怎么确定唯一的索引，然后建立并行计算，并且不同的线程组织形式是怎样影响性能的：</p>
+<ul>
+<li>二维网格二维线程块</li>
+<li>一维网格一维线程块</li>
+<li>二维网格一维线程块</li>
+</ul>
+<h2 id="使用块和线程建立矩阵索引"><a href="#使用块和线程建立矩阵索引" class="headerlink" title="使用块和线程建立矩阵索引"></a>使用块和线程建立矩阵索引</h2><p>多线程的优点就是每个线程处理不同的数据计算，那么怎么分配好每个线程处理不同的数据，而不至于多个不同的线程处理同一个数据，或者避免不同的线程没有组织的乱访问内存。<br>我们的线程模型前面2.0中已经有个大概的介绍，但是下图可以非常形象的反应线程模型，<strong>不过注意硬件实际的执行和存储不是按照图中的模型来的</strong>，大家注意区分：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/cuda_thread.png"
+                      alt="img"
+                ><br>这里(ix,iy)就是整个线程模型中任意一个线程的索引，或者叫做<strong>全局地址</strong>，局部地址当然就是(threadIdx.x,threadIdx.y)了，当然这个局部地址目前还没有什么用处，他只能索引线程块内的线程，不同线程块中有相同的局部索引值<br>图中的横坐标就是：<strong>块数宽 + 线程宽  （横坐标)</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220193414770.png"
+                      class="" title="image-20230220193414770"
+                >
+<p>纵坐标是：		<strong>块数宽 + 线程宽  （纵坐标)</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220193422132.png"
+                      class="" title="image-20230220193422132"
+                >
+<p>这样我们就得到了每个线程的唯一标号，并且在运行时kernel是可以访问这个标号的。</p>
+<p>前面讲过CUDA每一个线程执行相同的代码，也就是异构计算中说的多线程单指令，如果每个不同的线程执行同样的代码，又处理同一组数据，将会得到多个相同的结果，显然这是没意义的，为了让不同线程处理不同的数据，<strong>CUDA常用的做法是让不同的线程对应不同的数据，也就是用线程的全局标号对应不同组的数据。</strong><br>设备内存或者主机内存都是线性存在的，比如一个二维矩阵 (8×6)(8×6)，存储在内存中是这样的：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/memory.png"
+                      alt="img"
+                ></p>
+<p>我们要做管理的就是：</p>
+<ul>
+<li>线程和块索引（来计算线程的全局索引）</li>
+<li>矩阵中给定点的坐标（ix,iy）</li>
+<li>(ix,iy)对应的线性内存的位置</li>
+</ul>
+<p>线性位置的计算方法是：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/02/20/GPU%E7%BC%96%E7%A8%8B/image-20230220193722549.png"
+                      class="" title="image-20230220193722549"
+                >
+
+
+<p>我们上面已经计算出了线程的全局坐标，用线程的全局坐标对应矩阵的坐标，也就是说线程的坐标(ix,iy)对应矩阵中(ix,iy)的元素，这样就形成了一一对应（<strong>相同</strong>），不同的线程处理矩阵中不同的数据，举个具体的例子，ix&#x3D;10,iy&#x3D;10的线程去处理矩阵中(10,10)的数据，当然你也可以设计别的对应模式，但是这种方法是最简单出错可能最低的。</p>
+<p>我们接下来的代码来输出每个线程的标号信息：这段代码输出了一组我们随机生成的矩阵，并且核函数打印自己的线程标号</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cuda_runtime.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;freshman.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">__global__ <span class="type">void</span> <span class="title function_">printThreadIndex</span><span class="params">(<span class="type">float</span> *A,<span class="type">const</span> <span class="type">int</span> nx,<span class="type">const</span> <span class="type">int</span> ny)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> ix=threadIdx.x+blockIdx.x*blockDim.x;     <span class="comment">//全局横坐标</span></span><br><span class="line">  <span class="type">int</span> iy=threadIdx.y+blockIdx.y*blockDim.y;		<span class="comment">//全局纵坐标</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> idx=iy*nx+ix;					<span class="comment">//线性坐标</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;thread_id(%d,%d) block_id(%d,%d) coordinate(%d,%d)&quot;</span></span><br><span class="line">          <span class="string">&quot;global index %2d ival %2d\n&quot;</span>,threadIdx.x,threadIdx.y,</span><br><span class="line">          blockIdx.x,blockIdx.y,ix,iy,idx,A[idx]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>** argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  initDevice(<span class="number">0</span>);</span><br><span class="line">  <span class="type">int</span> nx=<span class="number">8</span>,ny=<span class="number">6</span>;</span><br><span class="line">  <span class="type">int</span> nxy=nx*ny;</span><br><span class="line">  <span class="type">int</span> nBytes=nxy*<span class="keyword">sizeof</span>(<span class="type">float</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//Malloc</span></span><br><span class="line">  <span class="type">float</span>* A_host=(<span class="type">float</span>*)<span class="built_in">malloc</span>(nBytes);</span><br><span class="line">  initialData(A_host,nxy);</span><br><span class="line">  printMatrix(A_host,nx,ny);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//cudaMalloc</span></span><br><span class="line">  <span class="type">float</span> *A_dev=<span class="literal">NULL</span>;</span><br><span class="line">  CHECK(cudaMalloc((<span class="type">void</span>**)&amp;A_dev,nBytes));</span><br><span class="line"></span><br><span class="line">  cudaMemcpy(A_dev,A_host,nBytes,cudaMemcpyHostToDevice);</span><br><span class="line"></span><br><span class="line">  dim3 <span class="title function_">block</span><span class="params">(<span class="number">4</span>,<span class="number">2</span>)</span>; 		<span class="comment">//4*2*1</span></span><br><span class="line">  dim3 <span class="title function_">grid</span><span class="params">((nx<span class="number">-1</span>)/block.x+<span class="number">1</span>,(ny<span class="number">-1</span>)/block.y+<span class="number">1</span>)</span>;</span><br><span class="line"></span><br><span class="line">  printThreadIndex&lt;&lt;&lt;grid,block&gt;&gt;&gt;(A_dev,nx,ny);</span><br><span class="line"></span><br><span class="line">  CHECK(cudaDeviceSynchronize());</span><br><span class="line">  cudaFree(A_dev);</span><br><span class="line">  <span class="built_in">free</span>(A_host);</span><br><span class="line"></span><br><span class="line">  cudaDeviceReset();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="二维矩阵加法"><a href="#二维矩阵加法" class="headerlink" title="二维矩阵加法"></a>二维矩阵加法</h2><p>我们利用上面的线程与数据的对应完成了下面的核函数：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">__global__ <span class="type">void</span> <span class="title function_">sumMatrix</span><span class="params">(<span class="type">float</span> * MatA,<span class="type">float</span> * MatB,<span class="type">float</span> * MatC,<span class="type">int</span> nx,<span class="type">int</span> ny)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> ix=threadIdx.x+blockDim.x*blockIdx.x;</span><br><span class="line">    <span class="type">int</span> iy=threadIdx.y+blockDim.y*blockIdx.y;</span><br><span class="line">    <span class="type">int</span> idx=ix+iy*ny;</span><br><span class="line">    <span class="keyword">if</span> (ix&lt;nx &amp;&amp; iy&lt;ny)</span><br><span class="line">    &#123;</span><br><span class="line">      MatC[idx]=MatA[idx]+MatB[idx];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>下面我们调整不同的线程组织形式，测试一下不同的效率并保证得到正确的结果，但是什么时候得到最好的效率是后面要考虑的，我们要做的就是用各种不同的相乘组织形式得到正确结果.</p>
+<h2 id="二维网格和二维块"><a href="#二维网格和二维块" class="headerlink" title="二维网格和二维块"></a>二维网格和二维块</h2><p>首先来看二维网格二维模块的代码：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2d block and 2d grid</span></span><br><span class="line">dim3 <span class="title function_">block_0</span><span class="params">(dimx,dimy)</span>;</span><br><span class="line">dim3 <span class="title function_">grid_0</span><span class="params">((nx<span class="number">-1</span>)/block_0.x+<span class="number">1</span>,(ny<span class="number">-1</span>)/block_0.y+<span class="number">1</span>)</span>;</span><br><span class="line">iStart=cpuSecond();</span><br><span class="line">sumMatrix&lt;&lt;&lt;grid_0,block_0&gt;&gt;&gt;(A_dev,B_dev,C_dev,nx,ny);</span><br><span class="line">CHECK(cudaDeviceSynchronize());</span><br><span class="line">iElaps=cpuSecond()-iStart;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;GPU Execution configuration&lt;&lt;&lt;(%d,%d),(%d,%d)&gt;&gt;&gt; Time elapsed %f sec\n&quot;</span>,</span><br><span class="line">      grid_0.x,grid_0.y,block_0.x,block_0.y,iElaps);</span><br><span class="line">CHECK(cudaMemcpy(C_from_gpu,C_dev,nBytes,cudaMemcpyDeviceToHost));</span><br><span class="line">checkResult(C_host,C_from_gpu,nxy);</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/2_2.png"
+                      alt="img"
+                ><br>红色框内是运行结果，用cpu写一个矩阵计算，然后比对结果，发现我们的运算结果是正确的，用时0.002152秒。</p>
+<h2 id="一维网格和一维块"><a href="#一维网格和一维块" class="headerlink" title="一维网格和一维块"></a>一维网格和一维块</h2><p>接着我们使用一维网格一维块：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1d block and 1d grid</span></span><br><span class="line">dimx=<span class="number">32</span>;</span><br><span class="line">dim3 <span class="title function_">block_1</span><span class="params">(dimx)</span>;</span><br><span class="line">dim3 <span class="title function_">grid_1</span><span class="params">((nxy<span class="number">-1</span>)/block_1.x+<span class="number">1</span>)</span>;</span><br><span class="line">iStart=cpuSecond();</span><br><span class="line">sumMatrix&lt;&lt;&lt;grid_1,block_1&gt;&gt;&gt;(A_dev,B_dev,C_dev,nx*ny ,<span class="number">1</span>);</span><br><span class="line">CHECK(cudaDeviceSynchronize());</span><br><span class="line">iElaps=cpuSecond()-iStart;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;GPU Execution configuration&lt;&lt;&lt;(%d,%d),(%d,%d)&gt;&gt;&gt; Time elapsed %f sec\n&quot;</span>,</span><br><span class="line">      grid_1.x,grid_1.y,block_1.x,block_1.y,iElaps);</span><br><span class="line">CHECK(cudaMemcpy(C_from_gpu,C_dev,nBytes,cudaMemcpyDeviceToHost));</span><br><span class="line">checkResult(C_host,C_from_gpu,nxy);</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/1_1.png"
+                      alt="img"
+                ><br>同样运行结果是正确的。</p>
+<h2 id="二维网格和一维块"><a href="#二维网格和一维块" class="headerlink" title="二维网格和一维块"></a>二维网格和一维块</h2><p>二维网格一维块：</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2d block and 1d grid</span></span><br><span class="line">dimx=<span class="number">32</span>;</span><br><span class="line">dim3 <span class="title function_">block_2</span><span class="params">(dimx)</span>;</span><br><span class="line">dim3 <span class="title function_">grid_2</span><span class="params">((nx<span class="number">-1</span>)/block_2.x+<span class="number">1</span>,ny)</span>;</span><br><span class="line">iStart=cpuSecond();</span><br><span class="line">sumMatrix&lt;&lt;&lt;grid_2,block_2&gt;&gt;&gt;(A_dev,B_dev,C_dev,nx,ny);</span><br><span class="line">CHECK(cudaDeviceSynchronize());</span><br><span class="line">iElaps=cpuSecond()-iStart;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;GPU Execution configuration&lt;&lt;&lt;(%d,%d),(%d,%d)&gt;&gt;&gt; Time elapsed %f sec\n&quot;</span>,</span><br><span class="line">      grid_2.x,grid_2.y,block_2.x,block_2.y,iElaps);</span><br><span class="line">CHECK(cudaMemcpy(C_from_gpu,C_dev,nBytes,cudaMemcpyDeviceToHost));</span><br><span class="line">checkResult(C_host,C_from_gpu,nxy);</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://face2ai.com/CUDA-F-2-3-%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B/2_1.png"
+                      alt="img"
+                ></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>用不同的线程组织形式会得到正确结果，但是效率有所区别：</p>
+<table>
+<thead>
+<tr>
+<th align="center">线程配置</th>
+<th align="center">执行时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">CPU单线程</td>
+<td align="center">0.060022</td>
+</tr>
+<tr>
+<td align="center">(128,128),(32,32)</td>
+<td align="center">0.002152</td>
+</tr>
+<tr>
+<td align="center">(524288,1),(32,1)</td>
+<td align="center">0.002965</td>
+</tr>
+<tr>
+<td align="center">(128,4096),(32,1)</td>
+<td align="center">0.002965</td>
+</tr>
+</tbody></table>
+<p>观察结果没有多大差距，但是明显比CPU快了很多，而且最主要的是我们本文用不同的线程组织模式都得到了正确结果，并且：</p>
+<ul>
+<li><strong>改变执行配置（线程组织）能得到不同的性能</strong></li>
+<li>传统的核函数可能不能得到最好的效果</li>
+<li>一个给定的核函数，通过调整网格和线程块大小可以得到更好的效果</li>
+</ul>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> GPU编程</li>
+        <li><strong>作者:</strong> Airex Yu</li>
+        <li><strong>创建于:</strong> 2023-02-20 21:17:45</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-05-25 20:36:36
+            </li>
+        
+        <li>
+            <strong>链接:</strong> http://example.com/2023/02/20/GPU编程/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/CUDA/">#CUDA</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/kernel/">#kernel</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E7%BA%BF%E7%A8%8B/">#线程</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E5%BC%82%E6%9E%84%E7%BC%96%E7%A8%8B/">#异构编程</a>&nbsp;
+                        </li>
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/">#并行计算</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/02/27/Linux/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">Linux</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/02/20/TensorRT/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">TensorRT</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">GPU编程</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8GPU"><span class="nav-text">我们为什么要使用GPU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA%C2%AE%EF%BC%9A%E9%80%9A%E7%94%A8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0%E5%92%8C%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-text">CUDA®：通用并行计算平台和编程模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E6%89%A9%E5%B1%95%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-text">可扩展的编程模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8"><span class="nav-text">内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%B1%82%E6%AC%A1"><span class="nav-text">线程层次</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83%E5%B1%82%E6%AC%A1"><span class="nav-text">存储单元层次</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E7%BC%96%E7%A8%8B"><span class="nav-text">异构编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5SIMT%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-text">异步SIMT编程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C"><span class="nav-text">异步操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E8%BF%90%E7%AE%97%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9E%B6%E6%9E%84"><span class="nav-text">并行运算与计算机架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="nav-text">并行计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%80%A7"><span class="nav-text">并行性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%9E%B6%E6%9E%84"><span class="nav-text">计算机架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E8%BF%9B%E5%85%A5cpu%E6%96%B9%E5%BC%8F%E5%88%92%E5%88%86"><span class="nav-text">按进入cpu方式划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E5%86%85%E5%AD%98%E5%88%92%E5%88%86"><span class="nav-text">根据内存划分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E5%92%8CCUDA"><span class="nav-text">异构计算和CUDA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97"><span class="nav-text">异构计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E6%9E%B6%E6%9E%84"><span class="nav-text">异构架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CUDA%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%BC%82%E6%9E%84%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="nav-text">CUDA：一种异构计算平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9CHello-World%E2%80%9D"><span class="nav-text">“Hello World”</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CUDA%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">CUDA编程模型概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA%E7%BC%96%E7%A8%8B%E7%BB%93%E6%9E%84"><span class="nav-text">CUDA编程结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-text">内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%B1%82%E6%AC%A1"><span class="nav-text">内存层次</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-text">线程管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0%E6%A6%82%E8%BF%B0"><span class="nav-text">核函数概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-text">启动核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-text">编写核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-text">验证核函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%89%A7%E8%A1%8C"><span class="nav-text">编译执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%99%E6%A0%B8%E5%87%BD%E6%95%B0%E8%AE%A1%E6%97%B6"><span class="nav-text">给核函数计时</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8CPU%E8%AE%A1%E6%97%B6"><span class="nav-text">用CPU计时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E7%95%8C%E9%99%90%E6%9C%80%E5%A4%A7%E5%8C%96"><span class="nav-text">理论界限最大化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E5%B9%B6%E8%A1%8C%E7%BA%BF%E7%A8%8B"><span class="nav-text">组织并行线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9D%97%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%BB%BA%E7%AB%8B%E7%9F%A9%E9%98%B5%E7%B4%A2%E5%BC%95"><span class="nav-text">使用块和线程建立矩阵索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5%E5%8A%A0%E6%B3%95"><span class="nav-text">二维矩阵加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%BD%91%E6%A0%BC%E5%92%8C%E4%BA%8C%E7%BB%B4%E5%9D%97"><span class="nav-text">二维网格和二维块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%BB%B4%E7%BD%91%E6%A0%BC%E5%92%8C%E4%B8%80%E7%BB%B4%E5%9D%97"><span class="nav-text">一维网格和一维块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E7%BD%91%E6%A0%BC%E5%92%8C%E4%B8%80%E7%BB%B4%E5%9D%97"><span class="nav-text">二维网格和一维块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Airex Yu</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.5</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/01/05 11:45:14
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

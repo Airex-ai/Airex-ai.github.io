@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Airex Yu">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/03/27/yolo/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="深度学习经典检测方法两阶段：Faster-rcnn	Mask-Rcnn系列：多添加了一步预选操作  速度通常较慢（5FPS），但是效果通常不错  单阶段：YOLO系列  速度非常快，适合做实时检测任务，但是效果通常不太好    指标分析map指标：综合衡量检测效果  IOU：交集 &#x2F; 并集     置信度：检测到的物体为检测目标的可能性。比如下图的0.9的框就代表该框可能是人脸的概率是0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yolo">
+<meta property="og:url" content="http://example.com/2023/03/27/yolo/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="深度学习经典检测方法两阶段：Faster-rcnn	Mask-Rcnn系列：多添加了一步预选操作  速度通常较慢（5FPS），但是效果通常不错  单阶段：YOLO系列  速度非常快，适合做实时检测任务，但是效果通常不太好    指标分析map指标：综合衡量检测效果  IOU：交集 &#x2F; 并集     置信度：检测到的物体为检测目标的可能性。比如下图的0.9的框就代表该框可能是人脸的概率是0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230326143800583.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230326145236185.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230326150121544.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230326150548879.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230326151232361.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230326152811680.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327082657997.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327082716349.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327085137037.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327090158457.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327093152705.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327101454007.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327101535947.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327103518476.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327103917678.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327104530087.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327105039647.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327105946066.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327110804622.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327111217938.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327135329637.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327140614094.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327141628154.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327142357128.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327142345641.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327145154420.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327145530393.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327145626644.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327145741285.png">
+<meta property="og:image" content="http://example.com/2023/03/27/yolo/image-20230327150402692.png">
+<meta property="article:published_time" content="2023-03-27T13:10:25.000Z">
+<meta property="article:modified_time" content="2023-05-25T13:17:38.470Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="yolo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/03/27/yolo/image-20230326143800583.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/%E9%B1%BC.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E9%B1%BC.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/%E9%B1%BC.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            yolo -
+        
+        Airex-Daily
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/assets/fonts.css">
+
+    <!--- Font Part-->
+    
+    
+    
+        <link href="" rel="stylesheet">
+    
+    
+        <link href="" rel="stylesheet">
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":true,"family":null,"url":null},"english":{"enable":true,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fix","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-rry6gw.png"},"title":"伸手也握不住彩虹🌈","subtitle":{"text":["——我期待"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/Airex-ai","instagram":null,"zhihu":null,"twitter":null,"email":"airex.yu@foxmail.com"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":"https://music.163.com/song?id=1501530173&userid=253099352","cover":null}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.1.5","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/Airex-ai?tab=repositories"}},"随记":{"icon":"fa-solid fa-tree-palm","path":"/masonry/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Airex-Daily
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/archives"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-archive"></i>
+                                        
+                                        归档
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown" 
+                                    href="#" onClick="return false;">
+                                    
+                                        
+                                            <i class="fa-regular fa-user"></i>
+                                        
+                                        关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                    
+                                        <li>
+                                        <a target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB
+                                        </a>
+                                        </li>
+                                    
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/masonry/"  >
+                                    
+                                        
+                                            <i class="fa-solid fa-tree-palm"></i>
+                                        
+                                        随记
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/archives"  >
+                             
+                                
+                                    <i class="fa-regular fa-archive"></i>
+                                
+                                归档
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="has-dropdown" 
+                        href="#" onClick="return false;">
+                            
+                                
+                                    <i class="fa-regular fa-user"></i>
+                                
+                                关于&nbsp;<i class="fa-solid fa-chevron-down"></i>
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                              
+                        
+                            <li class="dropdown-item flex-center">
+                                <a class="dropdown-item" target="_blank" rel="noopener" href="https://github.com/Airex-ai?tab=repositories">GITHUB</a>
+                            </li>
+                        
+                    
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/masonry/"  >
+                             
+                                
+                                    <i class="fa-solid fa-tree-palm"></i>
+                                
+                                随记
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+             
+                <div class="article-title">         
+                    <img src="/images/yolo.jpg" alt="yolo" />
+                    <h1 class="article-title-cover">yolo</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/%E5%A4%B4%E5%83%8F.JPG">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">Airex Yu</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-03-27 21:10:25</span>
+        <span class="mobile">2023-03-27 21:10</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-05-25 21:17:38</span>
+            <span class="mobile">2023-05-25 21:17</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/yolo/">yolo</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="深度学习经典检测方法"><a href="#深度学习经典检测方法" class="headerlink" title="深度学习经典检测方法"></a>深度学习经典检测方法</h1><p>两阶段：Faster-rcnn	Mask-Rcnn系列：多添加了一步预选操作</p>
+<ul>
+<li>速度通常较慢（5FPS），但是效果通常不错</li>
+</ul>
+<p>单阶段：YOLO系列</p>
+<ul>
+<li>速度非常快，适合做实时检测任务，但是效果通常不太好</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230326143800583.png"
+                      class="" title="image-20230326143800583"
+                >
+
+<h1 id="指标分析"><a href="#指标分析" class="headerlink" title="指标分析"></a>指标分析</h1><p><strong>map指标：综合衡量检测效果</strong> </p>
+<p><strong>IOU：交集 &#x2F; 并集</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230326145236185.png"
+                      class="" title="image-20230326145236185"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230326150121544.png"
+                      class="" title="image-20230326150121544"
+                >
+
+<p>置信度：检测到的物体为检测目标的可能性。比如下图的0.9的框就代表该框可能是人脸的概率是0.9</p>
+<ul>
+<li>精确度是对一个物体而言的，召回率是以整个照片而言的。若设置置信度阈值为0.9，则下图中，只有最左边的图片会被选择，且精确度为1，但对于整个照片来说，召回率只有1 &#x2F;3 ，因为后面的两个人脸没有检测到</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230326150548879.png"
+                      class="" title="image-20230326150548879"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230326151232361.png"
+                      class="" title="image-20230326151232361"
+                >
+
+<h1 id="yolo-v1"><a href="#yolo-v1" class="headerlink" title="yolo-v1"></a>yolo-v1</h1><p>经典的单阶段方法，把检测问题转化成回归问题，一个CNN就搞定。可以对视频进行实时检测，应用邻域非常广</p>
+<h2 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230326152811680.png"
+                      class="" title="image-20230326152811680"
+                >
+
+<h2 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327082657997.png"
+                      class="" title="image-20230327082657997"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327082716349.png"
+                      class="" title="image-20230327082716349"
+                >
+
+<ul>
+<li>10 &#x3D; （X,Y,H,W,C)*B（2个）</li>
+<li>当前数据集有20个类别</li>
+<li>7*7表示最终网格的大小</li>
+<li>最终的结果：(  S  * S )   *  (   B  *  5  + C)</li>
+</ul>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327085137037.png"
+                      class="" title="image-20230327085137037"
+                >
+
+<h2 id="NMS（非极大值抑制）"><a href="#NMS（非极大值抑制）" class="headerlink" title="NMS（非极大值抑制）"></a>NMS（非极大值抑制）</h2><p>对于一个真实框来说，会有多个候选框，根据IOU的阈值选取所有大于阈值的候选框。在此基础上，进一步选取IOU最大的候选框</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327090158457.png"
+                      class="" title="image-20230327090158457"
+                >
+
+<h2 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h2><ul>
+<li>无法处理物体重合的情况</li>
+<li>无法处理含有多标签的物体，如一个物体有狗，哈士奇等标签</li>
+<li>小物体检测效果一般，长宽比可选但单一</li>
+</ul>
+<h1 id="yolo-v2"><a href="#yolo-v2" class="headerlink" title="yolo-v2"></a>yolo-v2</h1><h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><ul>
+<li>速度更快，识别更准确<ul>
+<li>v2版本舍弃Dropout，卷积后全部加入Batch Normalization</li>
+<li>网络的每一层的输入都做了归一化，收敛相对更容易</li>
+<li>经过Batch Normalization处理后的网络会提升2%的map（指标）</li>
+<li>现在，Batch Normalization已经成为网络必备处理</li>
+</ul>
+</li>
+<li>更大的分辨率<ul>
+<li>v1训练用的是224*224，测试的时候使用448 * 448</li>
+<li>v2训练额外又进行了10次448*448的微调</li>
+<li>使用高分辨率分类器后，yolo2的map提升了约4%</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h2><ul>
+<li>DarkNet19（19个卷积层）：实际输入<strong>416*416</strong></li>
+<li>没有FC层，5次降采样（<strong>maxpool</strong>）。得到的结果是<strong>13*13</strong>（全连接层的缺点：参数多，计算量大）</li>
+<li>1*1卷积节省了很多参数</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327093152705.png"
+                      class="" title="image-20230327093152705"
+                >
+
+
+
+<h2 id="聚类提取先验框"><a href="#聚类提取先验框" class="headerlink" title="聚类提取先验框"></a>聚类提取先验框</h2><p>v1版本中，对于每一个真实框有两个先验框，数量太少。在v2版本中，通过k-means聚类将数据集分为5类，每类中的特征是接近的，进一步将每个真实框对应到五个先验框，定义聚类中的距离，也就是真实框和五个先验框之间的距离。有了五个框之后就可以计算5个IOU，从而选择IOU大的先验框<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327101454007.png"
+                      class="" title="image-20230327101454007"
+                ></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327101535947.png"
+                      class="" title="image-20230327101535947"
+                >
+
+<p><strong>候选框多了以后，recall提高，即所能检测的目标变多了</strong></p>
+<h2 id="直接位置预测"><a href="#直接位置预测" class="headerlink" title="直接位置预测"></a>直接位置预测</h2><p>当选定候选框后，网络会一步步学习接近真实框，但在这个过程中，若偏移量太大，就会导致候选框过于偏于真实框。xp和yp是候选框的中心点<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327103518476.png"
+                      class="" title="image-20230327103518476"
+                ></p>
+<p>这样会导致收敛问题，模型不稳定，尤其是刚开始进行训练的时候。<strong>v2版本并没有直接使用偏移量，而是选择相对grid cell的偏移量</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327103917678.png"
+                      class="" title="image-20230327103917678"
+                >
+
+<p>tx和ty会经过一个sigmoid函数，限制tx和ty的变化智能在1之间，也就是一个单位框中，就避免了候选框过度偏移的情况。cx和cy是候选框中心所在的单位框的左上角的坐标，代表候选框的中心点在该单位框中偏移</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327104530087.png"
+                      class="" title="image-20230327104530087"
+                >
+
+<h2 id="感受野"><a href="#感受野" class="headerlink" title="感受野"></a>感受野</h2><p>特征图上的点能看到的原始图像的区域大小。右边的大小就是5*5</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327105039647.png"
+                      class="" title="image-20230327105039647"
+                >
+
+<p> 上述的步骤解释：为什么需要多个小卷积核，而不是一个大的卷积核直接达到目标。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327105946066.png"
+                      class="" title="image-20230327105946066"
+                >
+
+<p><strong>小卷积核所需的参数更少，并且卷积过程越多（Batch Normalization越多），特征提取也会越细致，加入的非线性变换也随着增多，也不会增大权重参数的个数，这就是VGG网络的基本出发点</strong></p>
+<blockquote>
+<p>获取更多的特征</p>
+</blockquote>
+<p>由上图可知，最后一层的感受野太大了，适合检测大的目标，小目标可能会丢失，所以需要融合之前的特征</p>
+<p>将前面层的图像进行差分，拆成融合目标大小的多个小块，最后进行融合。这样既可以检测大的目标，也可以检测小的目标</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327110804622.png"
+                      class="" title="image-20230327110804622"
+                >
+
+<h2 id="多尺度"><a href="#多尺度" class="headerlink" title="多尺度"></a>多尺度</h2><p>卷积操作不在乎输入大小，但在v2版本中，经过一定的迭代之后会改变输入图片的大小，以此适应不通分辨率的图片</p>
+<p>图片大小最小320 * 320，最大608 * 608</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327111217938.png"
+                      class="" title="image-20230327111217938"
+                >
+
+<h1 id="yolo-v3"><a href="#yolo-v3" class="headerlink" title="yolo-v3"></a>yolo-v3</h1><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327135329637.png"
+                      class="" title="image-20230327135329637"
+                >
+
+<h2 id="改进-1"><a href="#改进-1" class="headerlink" title="改进"></a>改进</h2><ul>
+<li>更适合小目标检测</li>
+<li>特征做的更细致，融入多持续特征图信息来预测不通规格物体</li>
+<li>先验框更丰富，3中scale，每种3个规格，一共9种</li>
+<li>softmax改进，预测多标签任务</li>
+</ul>
+<h2 id="多scale"><a href="#多scale" class="headerlink" title="多scale"></a>多scale</h2><p>13<em>13的是检测大目标的，26 * 26是检测中目标的，52 * 52是检测小目标的。*<em>尺度越小，感受野越大，检测的目标越大</em></em></p>
+<p>每个scale又分了3种不通的候选框，总共9种</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327140614094.png"
+                      class="" title="image-20230327140614094"
+                >
+
+<blockquote>
+<p>scale变换经典方法</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327141628154.png"
+                      class="" title="image-20230327141628154"
+                >
+
+<h2 id="残差连接"><a href="#残差连接" class="headerlink" title="残差连接"></a>残差连接</h2><p>v3中用了resnet的思想,堆叠更多的层来进行特征提取 </p>
+<p>在VGG网络很火的时候,人们发现卷积层超过19之后,学习的效果就会很差,在此基础上,人们提出了resnet</p>
+<p><strong>在进行学习的时候,可以一如既往添加卷积层,但同时传递的还有原始的输入,在此基础上,网络判断是经过添加卷积层后的效果是变得更好,还是变得更差,更好就采用添加卷积层后的输入,否则就选择原始输入</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327142357128.png"
+                      class="" title="image-20230327142357128"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327142345641.png"
+                      class="" title="image-20230327142345641"
+                >
+
+<h2 id="核心网络架构"><a href="#核心网络架构" class="headerlink" title="核心网络架构"></a>核心网络架构</h2><ul>
+<li>没有池化层和全连接层，全部卷积</li>
+<li>用下采样代替池化层的作用，通过stride为2实现</li>
+<li>3种scale，更多先验框</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327145154420.png"
+                      class="" title="image-20230327145154420"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327145530393.png"
+                      class="" title="image-20230327145530393"
+                >
+
+<blockquote>
+<p>先验框设计</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327145626644.png"
+                      class="" title="image-20230327145626644"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327145741285.png"
+                      class="" title="image-20230327145741285"
+                >
+
+<h2 id="softmax层替代"><a href="#softmax层替代" class="headerlink" title="softmax层替代"></a>softmax层替代</h2><p>物体检测任务中可能一个物体有多个标签，用logistic激活函数来预测每一个类别是或不是</p>
+<p><strong>设置一个阈值，选择所有大于阈值的标签</strong></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2023/03/27/yolo/image-20230327150402692.png"
+                      class="" title="image-20230327150402692"
+                >
+
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> yolo</li>
+        <li><strong>作者:</strong> Airex Yu</li>
+        <li><strong>创建于:</strong> 2023-03-27 21:10:25</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-05-25 21:17:38
+            </li>
+        
+        <li>
+            <strong>链接:</strong> http://example.com/2023/03/27/yolo/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/yolo/">#yolo</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/04/06/MPI/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">MPI</span>
+                                    <span class="post-nav-item">上一篇</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/03/10/ROS/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">ROS</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;评论
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">yolo</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BB%8F%E5%85%B8%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95"><span class="nav-text">深度学习经典检测方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E6%A0%87%E5%88%86%E6%9E%90"><span class="nav-text">指标分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yolo-v1"><span class="nav-text">yolo-v1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84"><span class="nav-text">网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NMS%EF%BC%88%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6%EF%BC%89"><span class="nav-text">NMS（非极大值抑制）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-text">缺陷</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yolo-v2"><span class="nav-text">yolo-v2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB%E6%8F%90%E5%8F%96%E5%85%88%E9%AA%8C%E6%A1%86"><span class="nav-text">聚类提取先验框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BD%8D%E7%BD%AE%E9%A2%84%E6%B5%8B"><span class="nav-text">直接位置预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E5%8F%97%E9%87%8E"><span class="nav-text">感受野</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%B0%BA%E5%BA%A6"><span class="nav-text">多尺度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yolo-v3"><span class="nav-text">yolo-v3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B-1"><span class="nav-text">改进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9Ascale"><span class="nav-text">多scale</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AE%8B%E5%B7%AE%E8%BF%9E%E6%8E%A5"><span class="nav-text">残差连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84"><span class="nav-text">核心网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#softmax%E5%B1%82%E6%9B%BF%E4%BB%A3"><span class="nav-text">softmax层替代</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Airex Yu</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.5</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/01/05 11:45:14
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
